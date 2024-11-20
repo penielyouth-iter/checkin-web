@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/checkin-web/static/js/main.08f52100.js",
+    "main.js": "/checkin-web/static/js/main.e0849a55.js",
     "index.html": "/checkin-web/index.html",
-    "main.08f52100.js.map": "/checkin-web/static/js/main.08f52100.js.map"
+    "main.e0849a55.js.map": "/checkin-web/static/js/main.e0849a55.js.map"
   },
   "entrypoints": [
-    "static/js/main.08f52100.js"
+    "static/js/main.e0849a55.js"
   ]
 }
