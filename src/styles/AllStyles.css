@@ -1,0 +1,68 @@
+/* Block */
+.block {
+    margin-top: 16px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #dadce0;
+}
+
+.subView {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 30px;
+    text-align: left;
+}
+
+/* Row in Block */
+.familyRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.familyRowBackgound {
+    background-color: #f8f9fa;
+    border-radius: 3px;
+}
+
+.familyNameCol {
+    flex: 2;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 10px;
+}
+
+.familyCheckboxCol {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox {
+    background-color: #ffffff;
+    width: 22px;
+    height: 22px;
+}
+
+/* Text */
+.title {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.text {
+    font-size: 16px;
+}

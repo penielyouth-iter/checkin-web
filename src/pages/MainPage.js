@@ -2,59 +2,91 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { database, ref, get } from "../services/firebase";
 
-function MainPage() {
-  const navigate = useNavigate();
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+import Banner from '../components/Banner'
+import '../styles/AllStyles.css'
 
-  // Fetch data from Firebase
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const dbRef = ref(database, "peniel/families_dev"); // Replace "data" with your JSON key in Firebase
-        const snapshot = await get(dbRef);
-        if (snapshot.exists()) {
-          setData(snapshot.val());
-        } else {
-          console.error("No data available");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
+function MainPage() {
+    const navigate = useNavigate();
+    const [families, setFamilies] = useState([]);
+
+    // Fetch data from Firebase
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const dbRef = ref(database, "peniel/families_dev"); // Replace "data" with your JSON key in Firebase
+                const snapshot = await get(dbRef);
+                if (snapshot.exists()) {
+                    console.log("Data snapshot loaded.");
+                    setFamilies(snapshot.val());
+                } else {
+                    console.error("No data available");
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const goToSecondPage = () => {
+        navigate("/second");
     };
 
-    fetchData();
-  }, []);
+    return (
+        <div style={{ textAlign: "center", marginTop: "50px", backgroundColor: '#fdf1df'}}>
 
-  const goToSecondPage = () => {
-    navigate("/second");
-  };
+            <Banner/>
 
-  return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Welcome to the Main Page</h1>
-      <button onClick={goToSecondPage} style={{ padding: "10px 20px", fontSize: "16px" }}>
-        Go to Second Page
-      </button>
-      <div style={{ marginTop: "20px" }}>
-        {loading ? (
-          <p>Loading data...</p>
-        ) : data ? (
-          <ul>
-            {Object.keys(data).map((key) => (
-              <li key={key}>
-                <strong>{key}:</strong> {JSON.stringify(data[key])}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No data found</p>
-        )}
-      </div>
-    </div>
-  );
+            <div>
+                {families.map((familyData, familyIndex) => (
+                    // Family Block
+                    <div>
+                        {/* Family Name Block */}
+                        <div className="block">
+                            <div>
+                                <div className="title">{familyData.title}</div>
+                            </div>
+                        </div>
+
+                        {/* Member Block */}
+                        <div className="block">
+                            {/* Header Row */}
+                            <div className="familyRow">
+                                <div className="familyNameCol" style={{ flex: 2 }} /> {/* Flex adjustment for nameCell */}
+                                <div className="familyCheckboxCol">
+                                    <span className="text">簽到</span>
+                                </div>
+                                <div className="familyCheckboxCol">
+                                    <span className="text">分組</span>
+                                </div>
+                                <div className="familyCheckboxCol">
+                                    <span className="text">用餐</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                {familyData.members.map((member, memberIndex) => (
+                                    <div className="familyRow familyRowBackgound">
+                                        <div className="familyNameCol">
+                                            <text className="text">{member.name}</text>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+
+
+            <button onClick={goToSecondPage} style={{ padding: "10px 20px", fontSize: "16px" }}>
+                Go to Second Page
+            </button>
+
+        </div>
+    );
 }
 
 export default MainPage;
