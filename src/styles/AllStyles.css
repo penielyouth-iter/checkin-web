@@ -1,3 +1,10 @@
+.container {
+    text-align: center; 
+    margin-top: 0px; 
+    background-color: #fdf1df;
+}
+
+
 /* Block */
 .block {
     margin-top: 16px;
@@ -110,4 +117,60 @@
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+
+/* Form Horizontal View */
+.formHoriView {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Vertical alignment */
+    justify-content: center; /* Horizontal alignment */
+    margin-top: 10px;
+}
+
+/* Group Size Input */
+.input {
+    border-color: gray;
+    width: 20%;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Radio Box for Remainder Options */
+.radioBox {
+    height: 44px;
+    width: 64px;
+    border-width: 2px;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+/* Add, Delete Button */
+.button {
+    flex: 1;
+    margin: 5px;
+    padding: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: #7b9a89dd;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Button Text */
+.buttonText {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
 }
