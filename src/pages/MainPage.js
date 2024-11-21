@@ -3,14 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { database, ref, get } from "../services/firebase";
 
 import Banner from '../components/Banner'
+import DatePicker from "react-datepicker";  // Import the date picker component
+import "react-datepicker/dist/react-datepicker.css";
 import '../styles/AllStyles.css'
 
 function MainPage() {
     const navigate = useNavigate();
     const [families, setFamilies] = useState([]);
 
+    // Date, worship type and speaker selection
+    const today = new Date();
+    const [selectedDate, setSelectedDate] = useState(today);
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [worshipRadioBtnIdx, setWorshipRadioBtnIdx] = React.useState(0);
+    const [speakerRadioBtnIdx, setSpeakerRadioBtnIdx] = React.useState(0);
+    const [worshipInputText, setWorshipInputText] = React.useState('');
+    const [speakerInputText, setSpeakerInputText] = React.useState('');
+
     const [isDialogVisible, setIsDialogVisible] = useState(null);
     const [dialogType, setDialogType] = useState("");
+
+    const worshipTypeList = ["青年崇拜", "團契美好時光"]
+    const speakerTypeList = ["洪英正 教授", "錢玉芬 教授", "劉信優 牧師", "董倫賢 牧師", "楊雅莉 牧師", "蔡孟佳 牧師"]
 
 
     // Fetch data from Firebase
@@ -65,6 +79,110 @@ function MainPage() {
         <div style={{ textAlign: "center", marginTop: "50px", backgroundColor: '#fdf1df'}}>
 
             <Banner/>
+
+            <div className="block" style={{textAlign: 'left'}}>
+                {/* Select date */}
+                <div className="title">今天日期 📅</div>
+                <div className="subView">
+                    <button
+                        onClick={() => setDatePickerVisibility(true)}
+                        className="dateButton"
+                    >
+                        {selectedDate ? selectedDate.toISOString().split('T')[0] : 'Please Select Date'}
+                    </button>
+                    
+                    {/* Date Picker visibility toggle */}
+                    {isDatePickerVisible && (
+                        <DatePicker
+                            selected={selectedDate}
+                            onChange={(date) => {
+                                setSelectedDate(date);  // Update the selected date
+                                setDatePickerVisibility(false);  // Close the date picker
+                            }}
+                            onClickOutside={() => setDatePickerVisibility(false)}  // Close the date picker if clicked outside
+                            inline  // Render the date picker inline
+                        />
+                    )}
+                </div> {/* End of Date div */}
+
+                {/* Select worship type */}
+                <div className="title">聚會形式 ⛪️</div>
+                <div className="subView" style={{ alignItems: 'stretch' }}>
+                    <div>
+                        {worshipTypeList.map((worshipType, index) => (
+                            <label key={index} className="radioButton">
+                                <input
+                                    type="radio"
+                                    name="worshipType"
+                                    value={worshipType}
+                                    checked={worshipRadioBtnIdx === index}
+                                    onChange={() => setWorshipRadioBtnIdx(index)}  // Update selected index
+                                    style={{ marginRight: '8px' }}
+                                />
+                                <span>{worshipType}</span>
+                            </label>
+                        ))}
+                        
+                        {/* "Other" Option */}
+                        <label className="radioButton">
+                            <input
+                                type="radio"
+                                name="worshipType"
+                                value="Other"
+                                checked={worshipRadioBtnIdx === worshipTypeList.length}
+                                onChange={() => setWorshipRadioBtnIdx(worshipTypeList.length)}  // Mark the "Other" option
+                                style={{ marginRight: '8px' }}
+                            />
+                            <span>其他：</span>
+                            <input
+                                type="text"
+                                value={worshipInputText}
+                                onChange={(e) => setWorshipInputText(e.target.value)}
+                                className="textInput"
+                            />
+                        </label>
+                    </div>
+                </div> {/* End of Worship div */}
+
+                {/* Select speaker */}
+                <div className="title">講員 🎤</div>
+                <div className="subView" style={{ alignItems: 'stretch' }}>
+                    <div>
+                    {speakerTypeList.map((speakerType, index) => (
+                        <label key={index} className="radioButton">
+                        <input
+                            type="radio"
+                            name="speakerType"
+                            value={speakerType}
+                            checked={speakerRadioBtnIdx === index}
+                            onChange={() => setSpeakerRadioBtnIdx(index)}  // Update selected index
+                            style={{ marginRight: '8px' }}
+                        />
+                        <span>{speakerType}</span>
+                        </label>
+                    ))}
+                    
+                    {/* "Other" Option */}
+                    <label className="radioButton">
+                        <input
+                            type="radio"
+                            name="speakerType"
+                            value="Other"
+                            checked={speakerRadioBtnIdx === speakerTypeList.length}
+                            onChange={() => setSpeakerRadioBtnIdx(speakerTypeList.length)}  // Mark the "Other" option
+                            style={{ marginRight: '8px' }}
+                        />
+                        <span>其他：</span>
+                        <input
+                            type="text"
+                            value={speakerInputText}
+                            onChange={(e) => setSpeakerInputText(e.target.value)}
+                            className="textInput"
+                        />
+                    </label>
+                    </div>
+                </div> {/* End of Speaker div */}
+            </div> {/* End of info block */}
 
             <div>
                 {families.map((familyData, familyIndex) => (
