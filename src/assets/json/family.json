@@ -1,0 +1,153 @@
+
+[
+    {
+        "title": "輔導",
+        "members": [
+            {"name": "洪英正", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false}, 
+            {"name": "錢玉芬", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "主念小家", 
+        "members": [
+            {"name": "洪主念", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "白佳琪", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "陳怡蓁", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "郭以琳", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "陳詠君", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "林蔚慈", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蘇嘉慧", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "岱巧小家", 
+        "members": [
+            {"name": "于岱巧", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蕭慈瑩", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "孫傳音", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "許恩琪", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "葉珊華", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "夏寧"  , "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "慶萱小家", 
+        "members": [
+            {"name": "鄭慶萱", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "張瀞文", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "劉喜瑄", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "劉喜佳", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "陳亞瑟", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "莊蕙如", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "怡梅小家", 
+        "members": [
+            {"name": "葉怡梅", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蘇郁琳", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蘇家麗", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "劉可寧", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "馨庭成昕小家", 
+        "members": [
+            {"name": "張馨庭", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "成昕",   "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "江詠潔", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "余美莉", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "唐詩涵", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "孜庭成旻小家", 
+        "members": [
+            {"name": "林孜庭", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "成旻",   "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "江芷瑜", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "鄧芷軒", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "瑀彤小家", 
+        "members": [
+            {"name": "侯瑀彤", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蔡佳伶", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "李佳樺", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "許佳琳", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "楊子萱", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蔡沛恩", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "林宜蓁", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "張瑀曦", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "佳珍小家", 
+        "members": [
+            {"name": "吳佳珍", "leader": 1, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "金浩恩", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "瑞冠小家", 
+        "members": [
+            {"name": "蔡瑞陽", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "林冠廷", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蘆軍",   "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "許恩揚", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "劉增盛", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "黃俊傑", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "劉齊",   "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蘆沐義", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蘆沐安", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "主軍小家", 
+        "members": [
+            {"name": "洪主軍", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "魏丞鴻", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "鄒飛洋", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蔡主榮", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "胡齊平", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "胡信恩", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "黃品岳", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "林憲緯", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "國展小家", 
+        "members": [
+            {"name": "王國展", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "洪主安", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "鄭昀昕", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "蕭宇評", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "鐘宇澤", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "黃恩義", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "謝適謙", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "志豪小家", 
+        "members": [
+            {"name": "蔡志豪", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "林謙順", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "李鴻明", "leader": 1, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "梁永平", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "江秉儒", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "劉庭豪", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    },
+    {
+        "title": "新朋友",
+        "members": [
+            {"name": "郭家吟", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "林郁恆", "leader": 0, "gender": "M", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "鄭慶忻", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "王湘淇", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "郭沛均", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false},
+            {"name": "test", "leader": 0, "gender": "F", "arriveState": false, "groupState": false, "mealState": false}
+        ]
+    }
+]

@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import MainPage from "./MainPage";
-import SecondPage from "./SecondPage";
+import MainPage from "./pages/MainPage";
+import SecondPage from "./pages/SecondPage";
 
 function App() {
   return (
