@@ -1,13 +1,13 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
-import SecondPage from "./pages/SecondPage";
+import GroupPage from "./pages/GroupPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
-      <Route path="/second" element={<SecondPage />} />
+      <Route path="/group" element={<GroupPage />} />
     </Routes>
   );
 }

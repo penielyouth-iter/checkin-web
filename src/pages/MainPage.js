@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { familyDbRef, recordDbRef } from "../services/firebase";
 import { set, get } from "firebase/database";
+import { startGrouping } from "../services/grouping";
 
 import Banner from '../components/Banner'
 import EditMemberDialog from '../components/EditMemberDialog'
@@ -13,6 +14,8 @@ function MainPage() {
     const navigate = useNavigate();
 
     // ========== Firebase ==========
+    const [families, setFamilies] = useState([]);
+
     useEffect(() => {       // Fetch data from Firebase
         const fetchData = async () => {
             try {
@@ -31,7 +34,6 @@ function MainPage() {
         fetchData();
     }, []);
 
-
     // ========== Info Section ==========
     const worshipTypeList = ["青年崇拜", "團契美好時光"]
     const speakerTypeList = ["洪英正 教授", "錢玉芬 教授", "劉信優 牧師", "董倫賢 牧師", "楊雅莉 牧師", "蔡孟佳 牧師"]
@@ -49,7 +51,6 @@ function MainPage() {
 
 
     // ========== Family List Section ==========
-    const [families, setFamilies] = useState([]);
 
     const handleFamilyCheckboxChange = (familyIndex, memberIndex, stateKey) => {
         const updatedFamily = [...families];
@@ -138,20 +139,22 @@ function MainPage() {
         { label: '允許少人', value: 1 }
     ];
 
-    const startGrouping = (groupingData) => {
-        // Function to handle grouping logic, replace with your actual logic
-        console.log(groupingData);
-        return { table: "Group Data", data: groupingData }; // Example return data
-    };
-
     const handleStartGrouping = () => {
         let raw_grouping_data = {
             families: families,
             groupsize: groupsize,
             remainder: remainder,
         };
-        let table_data = startGrouping(raw_grouping_data);
-        console.log(table_data);  // Or navigate as needed, depending on your routing solution
+        let group_result = startGrouping(raw_grouping_data);
+        // navigate("/group", { state: tableData , fontsize: 16,});
+
+        // Save data to sessionStorage
+        sessionStorage.setItem('tableData', JSON.stringify(group_result.tableData));
+        
+        // Open the Group page in a new tab
+        const currentUrl = window.location.href;
+        const groupUrl = currentUrl.endsWith('/') ? `${currentUrl}group` : `${currentUrl}/group`;
+        window.open(groupUrl, "_blank");
     };
 
     const uploadWeeklyRecord = (data) => {
