@@ -3,18 +3,13 @@ import '../styles/GroupPage.css'; // Custom CSS file for styles
 
 const GroupPage = () => {
     const [tableData, setTableData] = useState([]);
-    console.log("Group page")
+    const [tableHeight, setTableHeight] = useState([]);
 
     useEffect(() => {
-        console.log("Group page use effect")
-        const storedTableData = JSON.parse(sessionStorage.getItem('tableData'));
-        console.log("Group page use effect storedTableData", storedTableData)
-
-        // Set the state with the data from sessionStorage
-        if (storedTableData) {
-            setTableData(storedTableData);
-            console.log("123 storedTableData:", storedTableData)
-            console.log("123 tableData:", tableData)
+        const groupResult = JSON.parse(sessionStorage.getItem('groupResult'));
+        if (groupResult) {
+            setTableData(groupResult.tableData);
+            setTableHeight(groupResult.tableHeight);
         }
     }, []);
 
@@ -23,21 +18,21 @@ const GroupPage = () => {
             <table className="table">
                 <thead>
                     <tr>
-                        {/* Table headers based on the column names */}
-                        {tableData && tableData[0] && tableData[0].map((header, index) => (
-                            <th key={index} style={{ fontSize: 16, height: 50 }}>
-                                {header}
+                        {/* Table headers based on the first row of the tableData */}
+                        {tableData.length > 0 && tableData.map((column, colIndex) => (
+                            <th key={colIndex} style={{ fontSize: 18, height: tableHeight }}>
+                                {column[0]} {/* First item in each column is the header */}
                             </th>
                         ))}
                     </tr>
                 </thead>
                 <tbody>
-                    {/* Table rows */}
-                    {tableData && tableData.slice(1).map((row, rowIndex) => (
+                    {/* Table rows, now iterating over the rows of data instead of columns */}
+                    {tableData.length > 0 && tableData[0].slice(1).map((_, rowIndex) => (  // Skip header row for table body
                         <tr key={rowIndex}>
-                            {row.map((cell, cellIndex) => (
-                                <td key={cellIndex} style={{ fontSize: 16 }}>
-                                    {cell}
+                            {tableData.map((column, colIndex) => (
+                                <td key={colIndex} style={{ fontSize: 18, height: tableHeight }}>
+                                    {column[rowIndex + 1]} {/* Skip the first item as it's the header */}
                                 </td>
                             ))}
                         </tr>

@@ -55,7 +55,7 @@ function MainPage() {
     const handleFamilyCheckboxChange = (familyIndex, memberIndex, stateKey) => {
         const updatedFamily = [...families];
         updatedFamily[familyIndex]["members"][memberIndex][stateKey] = !updatedFamily[familyIndex]["members"][memberIndex][stateKey];
-        console.log(updatedFamily[familyIndex]["members"][memberIndex][stateKey])
+        // console.log(updatedFamily[familyIndex]["members"][memberIndex][stateKey])
         setFamilies(updatedFamily);
     };
     
@@ -145,11 +145,10 @@ function MainPage() {
             groupsize: groupsize,
             remainder: remainder,
         };
-        let group_result = startGrouping(raw_grouping_data);
-        // navigate("/group", { state: tableData , fontsize: 16,});
+        let groupResult = startGrouping(raw_grouping_data);
 
         // Save data to sessionStorage
-        sessionStorage.setItem('tableData', JSON.stringify(group_result.tableData));
+        sessionStorage.setItem('groupResult', JSON.stringify(groupResult));
         
         // Open the Group page in a new tab
         const currentUrl = window.location.href;
