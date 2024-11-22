@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { database, ref, get } from "../services/firebase";
+import { familyDbRef, recordDbRef } from "../services/firebase";
+import { set, get } from "firebase/database";
 
 import Banner from '../components/Banner'
+import EditMemberDialog from '../components/EditMemberDialog'
 import DatePicker from "react-datepicker";  // Import the date picker component
 import "react-datepicker/dist/react-datepicker.css";
 import '../styles/AllStyles.css'
@@ -14,8 +16,7 @@ function MainPage() {
     useEffect(() => {       // Fetch data from Firebase
         const fetchData = async () => {
             try {
-                const dbRef = ref(database, "peniel/families_dev"); // Replace "data" with your JSON key in Firebase
-                const snapshot = await get(dbRef);
+                const snapshot = await get(familyDbRef);
                 if (snapshot.exists()) {
                     console.log("Data snapshot loaded.");
                     setFamilies(snapshot.val());
@@ -43,8 +44,8 @@ function MainPage() {
     const [worshipInputText, setWorshipInputText] = React.useState('');
     const [speakerInputText, setSpeakerInputText] = React.useState('');
 
-    const [isDialogVisible, setIsDialogVisible] = useState(null);
-    const [dialogType, setDialogType] = useState("");
+    const [editMemberDialogVisable, setEditMemberDialogVisible] = useState(null);
+    const [editMemberDialogType, setEditMemberDialogType] = useState("");
 
 
     // ========== Family List Section ==========
@@ -56,23 +57,77 @@ function MainPage() {
         console.log(updatedFamily[familyIndex]["members"][memberIndex][stateKey])
         setFamilies(updatedFamily);
     };
+    
+    const onEditMemberDialogCancel = () => {
+        setEditMemberDialogVisible(null);
+        setEditMemberDialogType("");
+    };
 
-    const onCancelDialog = () => {
-        setIsDialogVisible(null);
-        setDialogType("");
-    }
-
-    const onConfirmDialog = (inputName, familyTitle, selectedGender, selectPopupType) => {
-        setIsDialogVisible(null);
-        setDialogType("");
+    const onEditMemberDialogConfirm = (inputName, familyTitle, selectedGender, selectPopupType) => {
+        setEditMemberDialogVisible(null);
+        setEditMemberDialogType("");
 
         if (selectPopupType === "Add") {
-            console.log("Add " + inputName + " " + familyTitle + " " + selectedGender)
+            console.log("Add " + inputName + " " + familyTitle + " " + selectedGender);
+
+            const newMember = {
+                name: inputName, 
+                leader: 0, 
+                gender: selectedGender, 
+                arriveState: false, 
+                groupState: false, 
+                mealState: false
+            };
+
+            const updatedFamily = [...families];
+            for (const family of updatedFamily) {
+                if (family.title === familyTitle) {
+                    family.members.push(newMember);
+                }
+            }
+            setFamilies(updatedFamily);
+
+            // Upload families without states data to db
+            updateRemoteFamilyDb(updatedFamily);
+
+            alert('新增完成');
+        } else if (selectPopupType === "Del") {
+            console.log("Del " + inputName + " " + familyTitle + " " + selectedGender);
+
+            const updatedFamily = families.map(family => {
+                return {
+                    title: family.title,
+                    members: family.members.filter(member => 
+                        member.name !== inputName
+                    )
+                };
+            });
+            setFamilies(updatedFamily);
+
+            // Upload families without states data to db
+            updateRemoteFamilyDb(updatedFamily);
+
+            alert('刪除完成');
         }
-        else if (selectPopupType === "Del") {
-            console.log("Del " + inputName + " " + familyTitle + " " + selectedGender)
-        }
-    }
+    };
+
+    const updateRemoteFamilyDb = (familiesWithStates) => {
+        const familiesWithoutStates = familiesWithStates.map(family => {
+            return {
+                title: family.title,
+                members: family.members.map(member => {
+                    return {
+                        ...member,
+                        arriveState: false,
+                        groupState: false,
+                        mealState: false
+                    };
+                })
+            };
+        });
+        // Assuming `set(familiesRef, familiesWithoutStates)` is the way to save the data to Firebase or other backend
+        set(familyDbRef, familiesWithoutStates);
+    };
 
 
     // ========== Grouping Section ==========
@@ -239,7 +294,7 @@ function MainPage() {
                         <div className="iconContainer">
                             <button
                                 className="iconButton"
-                                onClick={() => { setIsDialogVisible(familyIndex); setDialogType("Add"); console.log("Add Clicked!"); }}
+                                onClick={() => { setEditMemberDialogVisible(familyIndex); setEditMemberDialogType("Add"); console.log("Add Clicked!"); }}
                             >
                                 <img
                                     src={require('../assets/images/addMember.png')}
@@ -250,7 +305,7 @@ function MainPage() {
 
                             <button
                                 className="iconButton"
-                                onClick={() => { setIsDialogVisible(familyIndex); setDialogType("Del"); console.log("Del Clicked!"); }}
+                                onClick={() => { setEditMemberDialogVisible(familyIndex); setEditMemberDialogType("Del"); console.log("Del Clicked!"); }}
                             >
                                 <img
                                     src={require('../assets/images/delMember.png')}
@@ -313,6 +368,14 @@ function MainPage() {
                     </div>  {/* End of Member List Block */}
                 </div>
             ))} {/* End of Family List section */}
+
+            <EditMemberDialog
+                visible={editMemberDialogVisable !== null}
+                editMemberDialogType={editMemberDialogType}  // Dialog type (Add/Del)
+                familyData={families[editMemberDialogVisable]}
+                onCancel={onEditMemberDialogCancel}
+                onConfirm={onEditMemberDialogConfirm}
+            />
 
 
             {/* ========== Grouping Section =========== */}

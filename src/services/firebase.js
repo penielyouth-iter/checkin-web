@@ -27,4 +27,7 @@ const app = initializeApp(firebaseConfig);
 // Initialize Realtime Database
 const database = getDatabase(app);
 
-export { database, ref, get };
+const familyDbRef = ref(database, "peniel/families_dev")
+const recordDbRef = ref(database, "peniel/weeklyrecords")
+
+export { familyDbRef, recordDbRef };
