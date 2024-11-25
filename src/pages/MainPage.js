@@ -1,18 +1,20 @@
+// Components
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { familyDbRef, recordDbRef } from "../services/firebase";
-import { set, get } from "firebase/database";
-import { startGrouping } from "../services/grouping";
-
 import Banner from '../components/Banner'
 import EditMemberDialog from '../components/EditMemberDialog'
-import DatePicker from "react-datepicker";  // Import the date picker component
+import DatePicker from "react-datepicker";
+import { IMAGES, JSONS } from '../constants/AssetPaths';
+// CSS
 import "react-datepicker/dist/react-datepicker.css";
 import '../styles/AllStyles.css'
+// Services
+import { set, get } from "firebase/database";
+import { familyDbRef } from "../services/firebase";
+import  startGrouping from "../services/grouping";
+import uploadWeeklyRecord from "../services/record"
+
 
 function MainPage() {
-    const navigate = useNavigate();
-
     // ========== Firebase ==========
     const [families, setFamilies] = useState([]);
 
@@ -25,9 +27,11 @@ function MainPage() {
                     setFamilies(snapshot.val());
                 } else {
                     console.error("No data available");
+                    setFamilies(JSONS.FAMILY_DEFAULT);
                 }
             } catch (error) {
                 console.error("Error fetching data:", error);
+                setFamilies(JSONS.FAMILY_DEFAULT);
             }
         };
 
@@ -39,7 +43,8 @@ function MainPage() {
     const speakerTypeList = ["洪英正 教授", "錢玉芬 教授", "劉信優 牧師", "董倫賢 牧師", "楊雅莉 牧師", "蔡孟佳 牧師"]
 
     const today = new Date();
-    const [selectedDate, setSelectedDate] = useState(today);
+    const formatDate = (date) => date.toISOString().split('T')[0]; // Extract YYYY-MM-DD
+    const [selectedDate, setSelectedDate] = useState(formatDate(today));
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [worshipRadioBtnIdx, setWorshipRadioBtnIdx] = React.useState(0);
     const [speakerRadioBtnIdx, setSpeakerRadioBtnIdx] = React.useState(0);
@@ -51,7 +56,6 @@ function MainPage() {
 
 
     // ========== Family List Section ==========
-
     const handleFamilyCheckboxChange = (familyIndex, memberIndex, stateKey) => {
         const updatedFamily = [...families];
         updatedFamily[familyIndex]["members"][memberIndex][stateKey] = !updatedFamily[familyIndex]["members"][memberIndex][stateKey];
@@ -126,10 +130,9 @@ function MainPage() {
                 })
             };
         });
-        // Assuming `set(familiesRef, familiesWithoutStates)` is the way to save the data to Firebase or other backend
+        
         set(familyDbRef, familiesWithoutStates);
     };
-
 
     // ========== Grouping Section ==========
     const [groupsize, setGroupsize] = useState("4");
@@ -152,27 +155,18 @@ function MainPage() {
         
         // Open the Group page in a new tab
         const currentUrl = window.location.href;
-        const groupUrl = currentUrl.endsWith('/') ? `${currentUrl}group` : `${currentUrl}/group`;
+        const groupUrl = currentUrl.endsWith('/') ? `${currentUrl}#group` : `${currentUrl}/#group`;
         window.open(groupUrl, "_blank");
-    };
-
-    const uploadWeeklyRecord = (data) => {
-        console.log("Uploaded data:", data);
-        // Handle upload logic
     };
 
     const handleGoToRecrodScreen = () => {
         console.log("Navigating to record screen");
+        
         // Handle navigation logic
+        const currentUrl = window.location.href;
+        const recordUrl = currentUrl.endsWith('/') ? `${currentUrl}#record` : `${currentUrl}/#record`;
+        window.open(recordUrl, "_blank");
     };
-
-
-    const goToSecondPage = () => {
-        navigate("/second");
-    };
-
-
-
 
     // ========== Layout ==========
     return (
@@ -189,7 +183,7 @@ function MainPage() {
                         onClick={() => setDatePickerVisibility(true)}
                         className="dateButton"
                     >
-                        {selectedDate ? selectedDate.toISOString().split('T')[0] : 'Please Select Date'}
+                        {selectedDate}
                     </button>
 
                     {/* Date Picker visibility toggle */}
@@ -197,8 +191,8 @@ function MainPage() {
                         <DatePicker
                             selected={selectedDate}
                             onChange={(date) => {
-                                setSelectedDate(date);  // Update the selected date
-                                setDatePickerVisibility(false);  // Close the date picker
+                                setSelectedDate(formatDate(date));  // Update the selected date
+                                setDatePickerVisibility(false);     // Close the date picker
                             }}
                             onClickOutside={() => setDatePickerVisibility(false)}  // Close the date picker if clicked outside
                             inline  // Render the date picker inline
@@ -299,7 +293,7 @@ function MainPage() {
                                 onClick={() => { setEditMemberDialogVisible(familyIndex); setEditMemberDialogType("Add"); console.log("Add Clicked!"); }}
                             >
                                 <img
-                                    src={require('../assets/images/addMember.png')}
+                                    src={IMAGES.ADD_MEMBER}
                                     alt="Add Member"
                                     className="iconImage"
                                 />
@@ -310,7 +304,7 @@ function MainPage() {
                                 onClick={() => { setEditMemberDialogVisible(familyIndex); setEditMemberDialogType("Del"); console.log("Del Clicked!"); }}
                             >
                                 <img
-                                    src={require('../assets/images/delMember.png')}
+                                    src={IMAGES.DEL_MEMBER}
                                     alt="Delete Member"
                                     className="iconImage"
                                 />
@@ -373,7 +367,7 @@ function MainPage() {
 
             <EditMemberDialog
                 visible={editMemberDialogVisable !== null}
-                editMemberDialogType={editMemberDialogType}  // Dialog type (Add/Del)
+                dialogType={editMemberDialogType}  // Dialog type (Add/Del)
                 familyData={families[editMemberDialogVisable]}
                 onCancel={onEditMemberDialogCancel}
                 onConfirm={onEditMemberDialogConfirm}
@@ -389,7 +383,7 @@ function MainPage() {
                     <input
                         type="number"
                         className="input"
-                        style={{ marginRight: '10px', textAlign: 'center', fontSize: 16 }}
+                        style={{ marginRight: '8px', textAlign: 'center', fontSize: 16 }}
                         value={groupsize}
                         onChange={(e) => setGroupsize(e.target.value)}
                         placeholder="Enter group size"
@@ -453,11 +447,6 @@ function MainPage() {
                     </button>
                 </div>
             </div> {/* End of Grouping section */}
-
-            <button onClick={goToSecondPage} style={{ padding: "10px 20px", fontSize: "16px" }}>
-                Go to Second Page
-            </button>
-
         </div>
     );
 }

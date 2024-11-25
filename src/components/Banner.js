@@ -1,4 +1,5 @@
 import React from "react";
+import { IMAGES } from '../constants/AssetPaths';
 
 function Banner() {
     const bannerStyles = {
@@ -19,7 +20,7 @@ function Banner() {
     return (
         <div style={bannerStyles.container}>
             <img 
-                src={require('../assets/images/banner.jpg')} // Using require to load the image
+                src={IMAGES.BANNER}
                 alt="Banner" 
                 style={bannerStyles.image} 
             />

@@ -132,7 +132,7 @@
 /* Group Size Input */
 .input {
     border-color: gray;
-    width: 20%;
+    width: 10%;
     border-width: 2px;
     border-radius: 10px;
     padding: 10px;
@@ -144,7 +144,7 @@
 /* Radio Box for Remainder Options */
 .radioBox {
     height: 44px;
-    width: 64px;
+    width: 50%;
     border-width: 2px;
     margin-left: 5px;
     margin-right: 5px;
@@ -156,7 +156,8 @@
 
 /* Add, Delete Button */
 .button {
-    flex: 1;
+    /* flex: 1; */
+    width: 35%;
     margin: 5px;
     padding: 10px;
     padding-left: 8px;

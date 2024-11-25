@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Select from 'react-select'; // Using react-select for dropdown functionality
-import FontAwesome from 'react-fontawesome'; // Optional if you want to use FontAwesome
 
 const EditMemberDialog = (props) => {
   const [inputName, setInputName] = useState('');

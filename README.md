@@ -1,16 +1,18 @@
-Ref:
-https://ithelp.ithome.com.tw/articles/10228423
-https://github.com/orgs/community/discussions/51200
+### How to run
 
-Init:
-```
-npx create-react-app checkin-app
-cd checkin-app
-npm install react-router-dom  
-npm start
-npm install --save gh-pages
-npm i firebase
-npm install react-select react-fontawesome
-```
+    * Clone repo
+    git clone https://github.com/penielyouth-iter/checkin-web.git
+    cd checkin-web
 
-Deploy: npm run deploy
+    * Install dependencies:
+    npm install
+
+    * Run locally for debug
+    npm start
+    
+    * Deploy to github pages
+    npm run deploy
+    
+### Ref
+* https://ithelp.ithome.com.tw/articles/10228423
+* https://github.com/orgs/community/discussions/51200

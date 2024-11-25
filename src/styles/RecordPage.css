@@ -1,0 +1,51 @@
+.container {
+    text-align: center; 
+    margin-top: 0px; 
+    background-color: #fdf1df;
+}
+
+.expandable-item {
+    margin-bottom: 10px;
+    background-color: #fcbb67dd;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.item-header {
+    padding: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.item-content {
+    padding: 10px;
+    background-color: #fff;
+    color: #000;
+}
+
+.field {
+    margin: 5px 0;
+}
+
+.separator {
+    border: 0.5px solid #c8c8c8;
+    margin: 5px 0;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 5px;
+}
+
+.action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.action-button img {
+    width: 25px;
+    height: 25px;
+}

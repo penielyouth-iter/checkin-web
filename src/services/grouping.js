@@ -92,4 +92,4 @@ function startGrouping(formdata) {
 
     return table_data
 }
-export { startGrouping }
+export default startGrouping
