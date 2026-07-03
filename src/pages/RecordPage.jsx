@@ -12,20 +12,22 @@ const RecordPage = () => {
         fetchWeeklyData();
     }, []);
 
-    const fetchWeeklyData = () => {
-        get(recordDbRef).then((snapshot) => {
-            let weeklyRecord;
+    const normalizeRecords = value => Array.isArray(value) ? value : JSONS.RECORD_DEFAULT;
+
+    const fetchWeeklyData = async () => {
+        try {
+            const snapshot = await get(recordDbRef);
             if (snapshot.exists()) {
                 console.log("Record data snapshot loaded.");
-                weeklyRecord = snapshot.val();
+                setRecords(normalizeRecords(snapshot.val()));
             } else {
                 console.log("No data available, use default local data.");
-                weeklyRecord = JSONS.RECORD_DEFAULT
+                setRecords(JSONS.RECORD_DEFAULT);
             }
-            setRecords(weeklyRecord);
-        }).catch((error) => {
+        } catch (error) {
             console.error(error);
-        });
+            setRecords(JSONS.RECORD_DEFAULT);
+        }
     };
 
     const ExpandableComponent = ({ rowId, item, onClickFunction }) => {
@@ -74,7 +76,11 @@ const RecordPage = () => {
                                     const newRecords = [...records];
                                     newRecords.splice(rowId, 1);
                                     setRecords(newRecords);
-                                    set(recordDbRef, newRecords);
+                                    set(recordDbRef, newRecords).catch(error => {
+                                        console.error(error);
+                                        alert('刪除失敗，請檢查網路連線。');
+                                        setRecords(records);
+                                    });
                                 }
                             }}
                         >

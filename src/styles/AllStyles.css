@@ -248,3 +248,112 @@
 .dateButton:hover {
     background: #f5f5f5;
 }
+
+/* ── Quick-add button & form on SubgroupBlock ── */
+.quickAddBtn {
+    margin-left: auto;
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    width: 26px;
+    height: 26px;
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+
+.quickAddBtn:hover { background: #219a52; }
+
+.quickAddForm {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: #f0fff4;
+    border-bottom: 1px solid #b7e8c8;
+    flex-wrap: wrap;
+}
+
+.quickAddInput {
+    flex: 1;
+    min-width: 80px;
+    padding: 5px 8px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.quickAddSelect {
+    padding: 5px 6px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 13px;
+    background: #fff;
+}
+
+.quickAddConfirm {
+    padding: 5px 12px;
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.quickAddConfirm:hover { background: #219a52; }
+
+.quickAddCancel {
+    padding: 5px 10px;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.quickAddCancel:hover { background: #c0392b; }
+
+/* ── Disabled group checkbox for children ── */
+input.checkbox:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* ── Search ── */
+.searchBlock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.searchInput {
+    flex: 1;
+    min-width: 0;
+    padding: 9px 12px;
+    border: 1.5px solid #d0d0d0;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #fff;
+    color: #333;
+}
+
+.searchClearBtn {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 7px;
+    background: #8d9a91;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}

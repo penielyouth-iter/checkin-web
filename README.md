@@ -8,7 +8,10 @@
     npm install
 
     * Run locally for debug
-    npm start
+    npm run dev
+
+    * Build for production
+    npm run build
     
     * Deploy to github pages
     npm run deploy

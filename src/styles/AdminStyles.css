@@ -52,17 +52,26 @@
 .adminSection {
     border: 1.5px solid #e2e8f0;
     border-radius: 10px;
-    padding: 14px;
+    padding: 0 0 12px 0;
+    margin-bottom: 10px;
     background: #f8fafc;
+    overflow: hidden;
+}
+
+.adminSectionHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    background: #dde6f0;
+    gap: 8px;
+    min-height: 44px;
+    border-bottom: 1px solid #c5d5e8;
 }
 
 .adminSectionTitle {
     font-size: 15px;
     font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #ddd;
+    color: #1a2e45;
 }
 
 /* ── Subgroups ── */
@@ -139,6 +148,17 @@
     color: #c07a00;
 }
 
+.adminCheckboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
 /* ── Drag handle ── */
 .dragHandle {
     cursor: grab;
@@ -199,6 +219,23 @@
 }
 
 .adminIconBtn:hover { background: #f0f0f0; }
+
+.adminMoveSelect {
+    font-size: 12px;
+    padding: 3px 4px;
+    border: 1px solid #c5cfe0;
+    border-radius: 5px;
+    background: #f0f4ff;
+    color: #3a5fa0;
+    cursor: pointer;
+    max-width: 110px;
+    flex-shrink: 0;
+}
+
+.adminMoveSelect:hover {
+    border-color: #3a5fa0;
+    background: #e4ecff;
+}
 
 .adminRowActions {
     display: flex;

@@ -7,13 +7,16 @@ function compareDate(a, b) {
     return 0;
 }
 
-// Returns a Promise that resolves when the write to Firebase completes.
 async function uploadWeeklyRecord(data) {
-    const arrive = [];
-    const meal = [];
+    const arrive = [], arriveChildren = [], meal = [];
+
     for (const family of data.families) {
+        const isChildrenFamily = family.id === 'sg_children' || family.title === '兒童';
         for (const member of family.members) {
-            if (member.arriveState) arrive.push(member.name);
+            if (member.arriveState) {
+                if (isChildrenFamily) arriveChildren.push(member.name);
+                else arrive.push(member.name);
+            }
             if (member.mealState) meal.push(member.name);
         }
     }
@@ -21,12 +24,14 @@ async function uploadWeeklyRecord(data) {
     const newRecord = {
         isExpanded: false,
         date: data.date,
-        title: `${data.date}  ${data.worship}  出席人數${arrive.length}`,
+        title: `${data.date}  ${data.worship}  大人${arrive.length}人 兒童${arriveChildren.length}人`,
         field: [
             { key: '聚會內容', value: data.worship },
             { key: '講員',     value: data.speaker },
             { key: '出席人數', value: arrive.length },
             { key: '出席名單', value: arrive.join('、') },
+            { key: '兒童人數', value: arriveChildren.length },
+            { key: '兒童名單', value: arriveChildren.join('、') },
             { key: '用餐人數', value: meal.length },
             { key: '用餐名單', value: meal.join('、') },
         ],
