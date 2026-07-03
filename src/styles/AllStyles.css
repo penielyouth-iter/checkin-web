@@ -175,3 +175,76 @@
     font-size: 14px;
     font-weight: bold;
 }
+
+/* ── Section headers (collapsible) ── */
+.sectionHeaderCollapsible {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+}
+
+.sectionHeader {
+    padding: 0 0 10px 0;
+}
+
+.collapseIcon {
+    font-size: 11px;
+    color: #888;
+}
+
+.sectionCount {
+    font-size: 13px;
+    color: #aaa;
+    font-weight: normal;
+}
+
+/* ── Subgroup blocks (within 青宣小組) ── */
+.subgroupBlock {
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.subgroupHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background: #f4f6f9;
+    gap: 8px;
+}
+
+.subgroupTitle {
+    font-size: 15px;
+    font-weight: 600;
+    color: #3a3a3a;
+}
+
+.subgroupCount {
+    font-size: 13px;
+    color: #999;
+}
+
+.subgroupContent {
+    padding: 0 10px 10px 10px;
+}
+
+/* ── Date button ── */
+.dateButton {
+    padding: 8px 16px;
+    background: #fff;
+    border: 1.5px solid #d0d0d0;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    color: #333;
+}
+
+.dateButton:hover {
+    background: #f5f5f5;
+}

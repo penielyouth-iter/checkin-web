@@ -1,13 +1,3 @@
-// export const firebaseConfig = {
-//     apiKey: "AIzaSyDXrWBpby0fWOtRqECpB9oNNr63IMpBJRU",
-//     authDomain: "pycheckinapp-9ef89.firebaseapp.com",
-//     databaseURL: "https://pycheckinapp-9ef89-default-rtdb.firebaseio.com",
-//     projectId: "pycheckinapp-9ef89",
-//     storageBucket: "pycheckinapp-9ef89.appspot.com",
-//     messagingSenderId: "799541182145",
-//     appId: "1:799541182145:web:63f425b0a5644e41dfde40",
-// };
-
 export const firebaseConfig = {
     apiKey: "AIzaSyBSFZP2U-jkc-A1wUdjE4U-kD9-Ot0nufE",
     authDomain: "pycheckinweb.firebaseapp.com",
@@ -20,5 +10,6 @@ export const firebaseConfig = {
 
 export const dbEndpoints = {
     FAMILIES: "peniel/families_dev",
-    RECORDS: "peniel/weeklyrecords"
+    RECORDS: "peniel/weeklyrecords",
+    STRUCTURE: "peniel/structure_v2",
 };

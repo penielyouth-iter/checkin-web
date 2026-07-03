@@ -1,18 +1,24 @@
-.container {
+.groupContainer {
+    height: 100vh;
     padding: 6px;
+    box-sizing: border-box;
     background-color: #f1f8ff;
 }
 
-.table {
+.groupTable {
     width: 100%;
+    height: calc(100vh - 12px);
     border-collapse: collapse;
     border: 2px solid #c8e1ff;
-    table-layout: fixed; /* Ensures equal column widths */
+    table-layout: fixed;
 }
 
-.table th, .table td {
+.groupTable th,
+.groupTable td {
     text-align: center;
+    font-size: 18px;
     font-weight: bold;
     padding: 8px;
     border: 1px solid #c8e1ff;
+    vertical-align: middle;
 }

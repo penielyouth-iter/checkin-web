@@ -1,0 +1,170 @@
+{
+  "counselors": [
+    {"name": "洪英正", "gender": "M", "leader": 0},
+    {"name": "錢玉芬", "gender": "F", "leader": 0}
+  ],
+  "qinxuan": {
+    "subgroups": [
+      {
+        "id": "sg_1",
+        "title": "主念小家",
+        "members": [
+          {"name": "洪主念", "gender": "F", "leader": 1},
+          {"name": "白佳琪", "gender": "F", "leader": 1},
+          {"name": "陳怡蓁", "gender": "F", "leader": 0},
+          {"name": "郭以琳", "gender": "F", "leader": 0},
+          {"name": "陳詠君", "gender": "F", "leader": 0},
+          {"name": "林蔚慈", "gender": "F", "leader": 0},
+          {"name": "蘇嘉慧", "gender": "F", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_2",
+        "title": "岱巧小家",
+        "members": [
+          {"name": "于岱巧", "gender": "F", "leader": 1},
+          {"name": "蕭慈瑩", "gender": "F", "leader": 0},
+          {"name": "孫傳音", "gender": "F", "leader": 0},
+          {"name": "許恩琪", "gender": "F", "leader": 0},
+          {"name": "葉珊華", "gender": "F", "leader": 0},
+          {"name": "夏寧",   "gender": "F", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_3",
+        "title": "慶萱小家",
+        "members": [
+          {"name": "鄭慶萱", "gender": "F", "leader": 1},
+          {"name": "張瀞文", "gender": "F", "leader": 1},
+          {"name": "劉喜瑄", "gender": "F", "leader": 0},
+          {"name": "劉喜佳", "gender": "F", "leader": 0},
+          {"name": "陳亞瑟", "gender": "F", "leader": 0},
+          {"name": "莊蕙如", "gender": "F", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_4",
+        "title": "怡梅小家",
+        "members": [
+          {"name": "葉怡梅", "gender": "F", "leader": 1},
+          {"name": "蘇郁琳", "gender": "F", "leader": 0},
+          {"name": "蘇家麗", "gender": "F", "leader": 0},
+          {"name": "劉可寧", "gender": "F", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_5",
+        "title": "馨庭成昕小家",
+        "members": [
+          {"name": "張馨庭", "gender": "F", "leader": 1},
+          {"name": "成昕",   "gender": "F", "leader": 1},
+          {"name": "江詠潔", "gender": "F", "leader": 0},
+          {"name": "余美莉", "gender": "F", "leader": 0},
+          {"name": "唐詩涵", "gender": "F", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_6",
+        "title": "孜庭成旻小家",
+        "members": [
+          {"name": "林孜庭", "gender": "F", "leader": 1},
+          {"name": "成旻",   "gender": "F", "leader": 1},
+          {"name": "江芷瑜", "gender": "F", "leader": 0},
+          {"name": "鄧芷軒", "gender": "F", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_7",
+        "title": "瑀彤小家",
+        "members": [
+          {"name": "侯瑀彤", "gender": "F", "leader": 1},
+          {"name": "蔡佳伶", "gender": "F", "leader": 1},
+          {"name": "李佳樺", "gender": "F", "leader": 0},
+          {"name": "許佳琳", "gender": "F", "leader": 0},
+          {"name": "楊子萱", "gender": "F", "leader": 0},
+          {"name": "蔡沛恩", "gender": "F", "leader": 0},
+          {"name": "林宜蓁", "gender": "F", "leader": 0},
+          {"name": "張瑀曦", "gender": "F", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_8",
+        "title": "佳珍小家",
+        "members": [
+          {"name": "吳佳珍", "gender": "F", "leader": 1},
+          {"name": "金浩恩", "gender": "F", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_9",
+        "title": "瑞冠小家",
+        "members": [
+          {"name": "蔡瑞陽", "gender": "M", "leader": 1},
+          {"name": "林冠廷", "gender": "M", "leader": 1},
+          {"name": "蘆軍",   "gender": "M", "leader": 1},
+          {"name": "許恩揚", "gender": "M", "leader": 0},
+          {"name": "劉增盛", "gender": "M", "leader": 0},
+          {"name": "黃俊傑", "gender": "M", "leader": 0},
+          {"name": "劉齊",   "gender": "M", "leader": 0},
+          {"name": "蘆沐義", "gender": "M", "leader": 0},
+          {"name": "蘆沐安", "gender": "M", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_10",
+        "title": "主軍小家",
+        "members": [
+          {"name": "洪主軍", "gender": "M", "leader": 1},
+          {"name": "魏丞鴻", "gender": "M", "leader": 1},
+          {"name": "鄒飛洋", "gender": "M", "leader": 0},
+          {"name": "蔡主榮", "gender": "M", "leader": 0},
+          {"name": "胡齊平", "gender": "M", "leader": 0},
+          {"name": "胡信恩", "gender": "M", "leader": 0},
+          {"name": "黃品岳", "gender": "M", "leader": 0},
+          {"name": "林憲緯", "gender": "M", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_11",
+        "title": "國展小家",
+        "members": [
+          {"name": "王國展", "gender": "M", "leader": 1},
+          {"name": "洪主安", "gender": "M", "leader": 1},
+          {"name": "鄭昀昕", "gender": "M", "leader": 1},
+          {"name": "蕭宇評", "gender": "M", "leader": 1},
+          {"name": "鐘宇澤", "gender": "M", "leader": 0},
+          {"name": "黃恩義", "gender": "M", "leader": 0},
+          {"name": "謝適謙", "gender": "M", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_12",
+        "title": "志豪小家",
+        "members": [
+          {"name": "蔡志豪", "gender": "M", "leader": 1},
+          {"name": "林謙順", "gender": "M", "leader": 1},
+          {"name": "李鴻明", "gender": "M", "leader": 1},
+          {"name": "梁永平", "gender": "M", "leader": 0},
+          {"name": "江秉儒", "gender": "M", "leader": 0},
+          {"name": "劉庭豪", "gender": "M", "leader": 0}
+        ]
+      },
+      {
+        "id": "sg_none",
+        "title": "無小家",
+        "members": []
+      }
+    ]
+  },
+  "nonQinxuan": {
+    "brothers": [
+      {"name": "林郁恆", "gender": "M", "leader": 0}
+    ],
+    "sisters": [
+      {"name": "郭家吟", "gender": "F", "leader": 0},
+      {"name": "鄭慶忻", "gender": "F", "leader": 0},
+      {"name": "王湘淇", "gender": "F", "leader": 0},
+      {"name": "郭沛均", "gender": "F", "leader": 0}
+    ]
+  }
+}

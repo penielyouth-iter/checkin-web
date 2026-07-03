@@ -1,0 +1,48 @@
+import { useEffect, useState } from 'react';
+import '../styles/GroupPage.css';
+
+const GroupPage = () => {
+    const [tableData, setTableData] = useState([]);
+    const [tableHeight, setTableHeight] = useState([]);
+
+    useEffect(() => {
+        const groupResult = JSON.parse(sessionStorage.getItem('groupResult'));
+        if (groupResult) {
+            setTableData(groupResult.tableData);
+            setTableHeight(groupResult.tableHeight);
+        }
+    }, []);
+
+    if (tableData.length === 0) {
+        return (
+            <div className="groupContainer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <p style={{ color: '#888', fontSize: 18 }}>沒有分組資料，請先回主畫面進行分組。</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="groupContainer">
+            <table className="groupTable">
+                <thead>
+                    <tr style={{ height: tableHeight[0] }}>
+                        {tableData.map((column, colIndex) => (
+                            <th key={colIndex}>{column[0]}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {tableData[0].slice(1).map((_, rowIndex) => (
+                        <tr key={rowIndex} style={{ height: tableHeight[rowIndex + 1] }}>
+                            {tableData.map((column, colIndex) => (
+                                <td key={colIndex}>{column[rowIndex + 1]}</td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
+export default GroupPage;

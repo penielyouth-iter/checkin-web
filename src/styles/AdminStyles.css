@@ -1,0 +1,260 @@
+/* ── Admin Overlay ── */
+.adminOverlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.adminPanel {
+    background: #fff;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 32px);
+}
+
+.adminPanelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: #2c3e50;
+    border-radius: 14px 14px 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.adminPanelTitle {
+    color: #fff;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.adminPanelBody {
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* ── Sections ── */
+.adminSection {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px;
+    background: #f8fafc;
+}
+
+.adminSectionTitle {
+    font-size: 15px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* ── Subgroups ── */
+.adminSubgroup {
+    border: 1px solid #d1d9e0;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.adminSubgroupHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    background: #eef2f7;
+    gap: 8px;
+    min-height: 44px;
+}
+
+.adminSubgroupTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+.adminSubgroupBody {
+    padding: 10px 12px;
+}
+
+.adminCollapseBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    color: #666;
+    padding: 0 2px;
+}
+
+/* ── Member rows ── */
+.adminMemberRow {
+    display: flex;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.adminMemberRow:last-of-type {
+    border-bottom: none;
+}
+
+.adminMemberName {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.adminMemberTag {
+    font-size: 11px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: #e8f4f8;
+    color: #2980b9;
+}
+
+.adminMemberTagLeader {
+    font-size: 11px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: #fef3cd;
+    color: #c07a00;
+}
+
+/* ── Drag handle ── */
+.dragHandle {
+    cursor: grab;
+    font-size: 18px;
+    color: #b0b8c1;
+    padding: 0 8px 0 4px;
+    user-select: none;
+    touch-action: none;
+    flex-shrink: 0;
+}
+
+.dragHandle:active {
+    cursor: grabbing;
+}
+
+/* ── Buttons ── */
+.adminBtn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.adminBtnSave {
+    background: #27ae60;
+    color: #fff;
+}
+
+.adminBtnSave:hover { background: #229954; }
+
+.adminBtnCancel {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.adminBtnCancel:hover { background: #c0392b; }
+
+.adminBtnAdd {
+    background: #3498db;
+    color: #fff;
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.adminBtnAdd:hover { background: #2980b9; }
+
+.adminIconBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    transition: background 0.15s;
+}
+
+.adminIconBtn:hover { background: #f0f0f0; }
+
+.adminRowActions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+/* ── Inline form ── */
+.adminInlineForm {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 6px 0;
+}
+
+.adminInput {
+    flex: 1;
+    min-width: 100px;
+    padding: 6px 8px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.adminSelect {
+    padding: 6px 6px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 13px;
+    background: #fff;
+}
+
+/* ── Password input at bottom ── */
+.adminPasswordSection {
+    margin-top: 30px;
+    padding: 14px 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.adminPasswordSection label {
+    font-size: 13px;
+    color: #999;
+}
+
+.adminPasswordInput {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 13px;
+    width: 150px;
+    background: #fff;
+    color: #666;
+}

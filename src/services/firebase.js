@@ -10,5 +10,6 @@ const database = getDatabase(app);
 
 const familyDbRef = ref(database, dbEndpoints.FAMILIES)
 const recordDbRef = ref(database, dbEndpoints.RECORDS)
+const structureDbRef = ref(database, dbEndpoints.STRUCTURE)
 
-export { familyDbRef, recordDbRef };
+export { familyDbRef, recordDbRef, structureDbRef };
