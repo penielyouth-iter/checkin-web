@@ -49,6 +49,45 @@ const buildDisplaySections = (structure, searchTerm) => {
         .filter(section => !isSearching || section.subgroups.length > 0);
 };
 
+const buildLoadedStateByName = loadedRecord => {
+    const byName = new Map();
+    for (const family of loadedRecord?.families || []) {
+        for (const member of family.members || []) {
+            if (!member.name) continue;
+            byName.set(member.name, {
+                arriveState: !!member.arriveState,
+                groupState: !!member.groupState,
+                mealState: !!member.mealState,
+            });
+        }
+    }
+    return byName;
+};
+
+const applyLoadedRecordStates = (structure, loadedRecord) => {
+    const byName = buildLoadedStateByName(loadedRecord);
+    if (byName.size === 0) return structure;
+
+    return {
+        ...structure,
+        sections: structure.sections.map(section => ({
+            ...section,
+            subgroups: section.subgroups.map(sg => ({
+                ...sg,
+                members: sg.members.map(member => {
+                    const loadedState = byName.get(member.name);
+                    return loadedState ? { ...member, ...loadedState } : {
+                        ...member,
+                        arriveState: false,
+                        groupState: false,
+                        mealState: false,
+                    };
+                }),
+            })),
+        })),
+    };
+};
+
 function MainPage() {
     // ── Data ──────────────────────────────────────────────────────────────────
     const [structure, setStructure] = useState(null);
@@ -76,7 +115,35 @@ function MainPage() {
                 raw = JSONS.STRUCTURE_DEFAULT;
                 records = JSONS.RECORD_DEFAULT;
             }
-            const withStates = applyAttendanceBuckets(addRuntimeStates(raw), records);
+            let withStates = applyAttendanceBuckets(addRuntimeStates(raw), records);
+            const loadedRecordRaw = sessionStorage.getItem('loadedRecordData');
+            if (loadedRecordRaw) {
+                try {
+                    const loadedRecord = JSON.parse(loadedRecordRaw);
+                    withStates = applyLoadedRecordStates(withStates, loadedRecord);
+                    if (loadedRecord.date) setSelectedDate(loadedRecord.date);
+                    const worshipIdx = (withStates.worshipTypes || []).indexOf(loadedRecord.worship);
+                    if (worshipIdx >= 0) {
+                        setWorshipIdx(worshipIdx);
+                        setWorshipOther('');
+                    } else if (loadedRecord.worship) {
+                        setWorshipIdx((withStates.worshipTypes || []).length);
+                        setWorshipOther(loadedRecord.worship);
+                    }
+                    const speakerIdx = (withStates.speakers || []).indexOf(loadedRecord.speaker);
+                    if (speakerIdx >= 0) {
+                        setSpeakerIdx(speakerIdx);
+                        setSpeakerOther('');
+                    } else if (loadedRecord.speaker) {
+                        setSpeakerIdx((withStates.speakers || []).length);
+                        setSpeakerOther(loadedRecord.speaker);
+                    }
+                } catch (e) {
+                    console.error(e);
+                } finally {
+                    sessionStorage.removeItem('loadedRecordData');
+                }
+            }
             setStructure(withStates);
 
             // All subgroups start collapsed
@@ -158,21 +225,43 @@ function MainPage() {
     }, []);
 
     // ── Grouping ──────────────────────────────────────────────────────────────
-    const [groupsize, setGroupsize] = useState('4');
-    const [remainder, setRemainder] = useState(0);
-    const remainderTypes = [
-        { label: '允許多人', value: 0 },
-        { label: '允許少人', value: 1 },
+    const [groupingRange, setGroupingRange] = useState('4-5');
+    const groupingRangeOptions = [
+        { label: '3～4人', value: '3-4', groupsize: '4', remainder: 1 },
+        { label: '4～5人', value: '4-5', groupsize: '4', remainder: 0 },
     ];
 
-    const handleStartGrouping = () => {
-        const result = startGrouping({
+    const uploadCurrentRecord = async () => {
+        const worshipTypes = structure.worshipTypes;
+        const speakers = structure.speakers;
+        const worship = worshipIdx < worshipTypes.length ? worshipTypes[worshipIdx] : worshipOther;
+        const speaker = speakerIdx < speakers.length ? speakers[speakerIdx] : speakerOther;
+        await uploadWeeklyRecord({
+            date: selectedDate,
+            worship,
+            speaker,
             families: structureToFamilies(structure),
-            groupsize,
-            remainder,
         });
-        sessionStorage.setItem('groupResult', JSON.stringify(result));
-        openHashRoute('group');
+    };
+
+    const handleStartGrouping = async () => {
+        setUploading(true);
+        try {
+            await uploadCurrentRecord();
+            const selectedRange = groupingRangeOptions.find(option => option.value === groupingRange) || groupingRangeOptions[0];
+            const result = startGrouping({
+                families: structureToFamilies(structure),
+                groupsize: selectedRange.groupsize,
+                remainder: selectedRange.remainder,
+            });
+            sessionStorage.setItem('groupResult', JSON.stringify(result));
+            openHashRoute('group');
+        } catch (e) {
+            alert('上傳失敗，未進行分組。請檢查網路連線。');
+            console.error(e);
+        } finally {
+            setUploading(false);
+        }
     };
 
     const handleGoToRecord = () => {
@@ -180,28 +269,6 @@ function MainPage() {
     };
 
     const [uploading, setUploading] = useState(false);
-
-    const handleUpload = async () => {
-        setUploading(true);
-        try {
-            const worshipTypes = structure.worshipTypes;
-            const speakers = structure.speakers;
-            const worship = worshipIdx < worshipTypes.length ? worshipTypes[worshipIdx] : worshipOther;
-            const speaker = speakerIdx < speakers.length ? speakers[speakerIdx] : speakerOther;
-            await uploadWeeklyRecord({
-                date: selectedDate,
-                worship,
-                speaker,
-                families: structureToFamilies(structure),
-            });
-            alert('上傳完成 ✓');
-        } catch (e) {
-            alert('上傳失敗，請檢查網路連線。');
-            console.error(e);
-        } finally {
-            setUploading(false);
-        }
-    };
 
     // ── Admin ─────────────────────────────────────────────────────────────────
     const [adminMode, setAdminMode] = useState(false);
@@ -323,40 +390,17 @@ function MainPage() {
             <div className="block" style={{ textAlign: 'left' }}>
                 <div className="title">每組人數</div>
                 <div className="formHoriView">
-                    <input
-                        type="number"
-                        className="input"
-                        style={{ marginRight: 8, textAlign: 'center', fontSize: 16 }}
-                        value={groupsize}
-                        onChange={e => setGroupsize(e.target.value)}
-                    />
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        {remainderTypes.map(t => (
-                            <button
-                                key={t.value}
-                                className="radioBox"
-                                onClick={() => setRemainder(t.value)}
-                                style={{
-                                    borderColor: remainder === t.value ? '#f05c38' : '#bfbfbf',
-                                    backgroundColor: remainder === t.value ? '#f05c38' : '',
-                                    color: remainder === t.value ? '#fff' : '#bfbfbf',
-                                }}
-                            >
-                                <span className="buttonText" style={{ color: remainder === t.value ? '#fff' : '#bfbfbf', fontSize: 12 }}>
-                                    {t.label}
-                                </span>
-                            </button>
+                    <select
+                        className="groupRangeSelect"
+                        value={groupingRange}
+                        onChange={e => setGroupingRange(e.target.value)}
+                    >
+                        {groupingRangeOptions.map(option => (
+                            <option key={option.value} value={option.value}>{option.label}</option>
                         ))}
-                    </div>
-                    <button className="button" onClick={handleStartGrouping}>
-                        <span className="buttonText">分組！</span>
-                    </button>
-                </div>
-
-                <div className="title" style={{ marginTop: 12 }}>簽到結果</div>
-                <div className="formHoriView">
-                    <button className="button" onClick={handleUpload} disabled={uploading}>
-                        <span className="buttonText">{uploading ? '上傳中…' : '上傳'}</span>
+                    </select>
+                    <button className="button" onClick={handleStartGrouping} disabled={uploading}>
+                        <span className="buttonText">{uploading ? '上傳中…' : '上傳&分組'}</span>
                     </button>
                     <button className="button" onClick={handleGoToRecord}>
                         <span className="buttonText">檢視紀錄</span>

@@ -33,8 +33,6 @@ function buildDestinations(structure) {
 // ── Editable list (worship types / speakers) ──────────────────────────────────
 function ListEditor({ title, items, onUpdate }) {
     const [input, setInput] = useState('');
-    const [editingIdx, setEditingIdx] = useState(null);
-    const [editInput, setEditInput] = useState('');
 
     const handleAdd = () => {
         if (!input.trim()) return;
@@ -42,43 +40,18 @@ function ListEditor({ title, items, onUpdate }) {
         setInput('');
     };
 
-    const handleStartEdit = (idx, item) => {
-        setEditingIdx(idx);
-        setEditInput(item);
-    };
-
-    const handleSaveEdit = idx => {
-        const value = editInput.trim();
-        if (!value) return;
-        onUpdate(items.map((item, i) => i === idx ? value : item));
-        setEditingIdx(null);
-        setEditInput('');
-    };
-
     return (
         <div style={{ flex: 1, minWidth: 180 }}>
             <div className="adminSubgroupTitle" style={{ marginBottom: 8 }}>{title}</div>
             {items.map((item, idx) => (
                 <div key={idx} className="adminMemberRow">
-                    {editingIdx === idx ? (
-                        <div className="adminInlineForm" style={{ flex: 1, padding: 0 }}>
-                            <input
-                                className="adminInput"
-                                value={editInput}
-                                onChange={e => setEditInput(e.target.value)}
-                                onKeyDown={e => e.key === 'Enter' && handleSaveEdit(idx)}
-                                autoFocus
-                            />
-                            <button className="adminBtn adminBtnSave" onClick={() => handleSaveEdit(idx)}>儲存</button>
-                            <button className="adminBtn adminBtnCancel" onClick={() => setEditingIdx(null)}>取消</button>
-                        </div>
-                    ) : (
-                        <>
-                            <span style={{ flex: 1, fontSize: 13 }}>{item}</span>
-                            <button className="adminIconBtn" onClick={() => handleStartEdit(idx, item)}>✏️</button>
-                            <button className="adminIconBtn" onClick={() => onUpdate(items.filter((_, i) => i !== idx))}>🗑️</button>
-                        </>
-                    )}
+                    <input
+                        className="adminInput"
+                        value={item}
+                        onChange={e => onUpdate(items.map((current, i) => i === idx ? e.target.value : current))}
+                        onBlur={e => onUpdate(items.map((current, i) => i === idx ? e.target.value.trim() : current))}
+                    />
+                    <button className="adminIconBtn" onClick={() => onUpdate(items.filter((_, i) => i !== idx))}>🗑️</button>
                 </div>
             ))}
             <div className="adminInlineForm" style={{ marginTop: 6 }}>

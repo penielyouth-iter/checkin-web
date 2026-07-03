@@ -127,6 +127,8 @@
     align-items: center; /* Vertical alignment */
     justify-content: center; /* Horizontal alignment */
     margin-top: 10px;
+    gap: 6px;
+    flex-wrap: wrap;
 }
 
 /* Group Size Input */
@@ -139,6 +141,20 @@
     margin: 5px;
     font-size: 16px;
     text-align: center;
+}
+
+.groupRangeSelect {
+    flex: 1;
+    min-width: 120px;
+    height: 44px;
+    margin: 5px;
+    padding: 0 12px;
+    border: 2px solid #bfbfbf;
+    border-radius: 10px;
+    background: #fff;
+    color: #333;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 /* Radio Box for Remainder Options */
@@ -157,7 +173,8 @@
 /* Add, Delete Button */
 .button {
     /* flex: 1; */
-    width: 35%;
+    flex: 1;
+    min-width: 110px;
     margin: 5px;
     padding: 10px;
     padding-left: 8px;
@@ -220,12 +237,15 @@
 }
 
 .subgroupTitle {
+    flex: 1;
+    text-align: left;
     font-size: 15px;
     font-weight: 600;
     color: #3a3a3a;
 }
 
 .subgroupCount {
+    flex-shrink: 0;
     font-size: 13px;
     color: #999;
 }

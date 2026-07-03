@@ -1,51 +1,345 @@
-.container {
-    text-align: center; 
-    margin-top: 0px; 
-    background-color: #fdf1df;
+.recordPage {
+    min-height: 100vh;
+    background: #f7efe3;
+    color: #25312c;
+    padding: 14px;
+    box-sizing: border-box;
 }
 
-.expandable-item {
-    margin-bottom: 10px;
-    background-color: #fcbb67dd;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.item-header {
-    padding: 20px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.item-content {
-    padding: 10px;
-    background-color: #fff;
-    color: #000;
-}
-
-.field {
-    margin: 5px 0;
-}
-
-.separator {
-    border: 0.5px solid #c8c8c8;
-    margin: 5px 0;
-}
-
-.actions {
+.recordHeader {
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    padding: 5px;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 14px;
 }
 
-.action-button {
-    background: none;
-    border: none;
+.recordHeader h1 {
+    margin: 0 0 5px 0;
+    font-size: 26px;
+    letter-spacing: 0;
+}
+
+.recordHeader p {
+    margin: 0;
+    color: #6e766f;
+    font-size: 14px;
+}
+
+.rangeTabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.rangeTab {
+    border: 1px solid #cbd7d0;
+    background: #fff;
+    color: #405047;
+    border-radius: 7px;
+    padding: 9px 13px;
+    font-size: 14px;
     cursor: pointer;
 }
 
-.action-button img {
-    width: 25px;
-    height: 25px;
+.rangeTab.active {
+    border-color: #2f6f55;
+    background: #2f6f55;
+    color: #fff;
+}
+
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.summaryItem,
+.recordSection,
+.weeklyItem {
+    background: #fff;
+    border: 1px solid #e0ded8;
+    border-radius: 8px;
+}
+
+.summaryItem {
+    padding: 12px;
+    text-align: left;
+}
+
+.summaryItem span {
+    display: block;
+    color: #758077;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.summaryItem strong {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.recordSection {
+    padding: 14px;
+    margin-bottom: 14px;
+}
+
+.recordSectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.recordSectionHeader h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.recordSectionHeader span {
+    color: #778078;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.chartShell {
+    width: 100%;
+}
+
+.attendanceChart {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.chartAxis {
+    stroke: #b8c5bd;
+    stroke-width: 1.4;
+}
+
+.chartGrid {
+    stroke: #edf1ee;
+    stroke-width: 1;
+}
+
+.chartTick,
+.chartDate {
+    fill: #78827a;
+    font-size: 12px;
+}
+
+.chartLine {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.chartLineTotal { stroke: #2f6f55; }
+.chartLineAdult { stroke: #4f7fa8; }
+.chartLineChild { stroke: #d4913d; }
+.chartDotTotal { fill: #2f6f55; }
+
+.chartLegend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    color: #55635b;
+    font-size: 13px;
+}
+
+.chartLegend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.chartLegend i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legendTotal { background: #2f6f55; }
+.legendAdult { background: #4f7fa8; }
+.legendChild { background: #d4913d; }
+
+.weeklyList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.weeklySummary {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 96px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 14px;
+    cursor: pointer;
+    color: inherit;
+}
+
+.weeklyDate {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.weeklyMeta {
+    color: #606c64;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.weeklyCounts {
+    text-align: right;
+}
+
+.weeklyCounts b {
+    display: block;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.weeklyCounts small {
+    display: block;
+    margin-top: 4px;
+    color: #6e776f;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.weeklyDetail {
+    border-top: 1px solid #ece8df;
+    padding: 14px;
+}
+
+.detailColumns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.weeklyDetail h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+}
+
+.nameList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.nameList span {
+    background: #f3f6f2;
+    border: 1px solid #dfe7df;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 13px;
+}
+
+.nameList em {
+    color: #8b938c;
+    font-size: 13px;
+    font-style: normal;
+}
+
+.mealRow {
+    margin-top: 14px;
+    color: #5f6a62;
+    font-size: 13px;
+}
+
+.recordActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.loadRecordBtn,
+.deleteRecordBtn {
+    border: none;
+    color: #fff;
+    border-radius: 7px;
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.loadRecordBtn {
+    background: #2f6f55;
+}
+
+.deleteRecordBtn {
+    background: #c94c3f;
+}
+
+.recordEmpty {
+    background: #fff;
+    border: 1px solid #e1ddd5;
+    border-radius: 8px;
+    padding: 22px;
+    text-align: center;
+    color: #6f786f;
+}
+
+@media (min-width: 720px) {
+    .recordPage {
+        padding: 24px;
+    }
+
+    .recordHeader {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+
+    .summaryGrid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .recordPage {
+        padding: 10px;
+    }
+
+    .recordHeader h1 {
+        font-size: 23px;
+    }
+
+    .rangeTab {
+        flex: 1;
+        min-width: 70px;
+    }
+
+    .recordSection {
+        padding: 12px;
+    }
+
+    .weeklySummary {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "date count"
+            "meta count";
+        padding: 13px;
+    }
+
+    .weeklyDate { grid-area: date; }
+    .weeklyMeta { grid-area: meta; }
+    .weeklyCounts { grid-area: count; }
+
+    .detailColumns {
+        grid-template-columns: 1fr;
+    }
 }
