@@ -1,0 +1,658 @@
+.weeklyPage {
+    position: relative;
+    min-height: 100vh;
+    background:
+        linear-gradient(135deg, rgba(239, 181, 107, 0.18), transparent 34%),
+        linear-gradient(315deg, rgba(95, 151, 121, 0.2), transparent 30%),
+        #fffaf0;
+    color: #26332d;
+    padding: 18px;
+    box-sizing: border-box;
+}
+
+.weeklyTopbar {
+    max-width: 1080px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.weeklySmallBtn,
+.weeklySaveBtn {
+    border: 1px solid rgba(64, 80, 71, 0.16);
+    border-radius: 7px;
+    background: #fff;
+    color: #33443b;
+    text-decoration: none;
+    padding: 9px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.weeklySaveBtn {
+    background: #2f6f55;
+    color: #fff;
+    border-color: #2f6f55;
+    font-weight: 800;
+}
+
+.weeklySaveBtn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.weeklyEditHero,
+.weeklyEditorPanel,
+.weeklyReportCanvas,
+.weeklyEmpty {
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.weeklyEditHero {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 16px;
+    align-items: end;
+    margin-bottom: 16px;
+    padding: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ffffff 0%, #f6e1c1 100%);
+    border: 1px solid rgba(64, 80, 71, 0.1);
+}
+
+.weeklyKicker {
+    margin: 0 0 8px;
+    color: #bd6249;
+    font-weight: 900;
+}
+
+.weeklyEditHero h1 {
+    margin: 0;
+    font-size: 42px;
+    line-height: 1.08;
+    letter-spacing: 0;
+}
+
+.weeklyEditHero p {
+    margin: 9px 0;
+    color: #607069;
+}
+
+.weeklyEditHero strong {
+    display: block;
+    color: #2f6f55;
+}
+
+.datePickerCard {
+    position: relative;
+    background: rgba(255, 255, 255, 0.82);
+    border-radius: 8px;
+    padding: 14px;
+    border: 1px solid rgba(64, 80, 71, 0.12);
+}
+
+.weeklyDatePickerButton {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d8dfd9;
+    background: #fff;
+    border-radius: 7px;
+    padding: 10px 11px;
+    color: #26332d;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.weeklyCalendarPopover {
+    position: absolute;
+    right: 14px;
+    top: calc(100% - 6px);
+    z-index: 12;
+    background: #fff;
+    border: 1px solid #d8dfd9;
+    border-radius: 8px;
+    box-shadow: 0 16px 38px rgba(56, 64, 58, 0.16);
+    padding: 8px;
+}
+
+.weeklyCalendarPopover .react-datepicker {
+    border: none;
+    font-family: inherit;
+}
+
+.datePickerCard span,
+.weeklyInfoCard span,
+.weeklySectionTitle span,
+.archiveSelect span {
+    display: block;
+    color: #7a867f;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.weeklyField span,
+.titheTitle {
+    display: block;
+    margin: 0 0 8px;
+    color: #6e4a22;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.weeklyField input,
+.archiveSelect select,
+.titheRow input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d8dfd9;
+    background: #fff;
+    border-radius: 7px;
+    padding: 10px 11px;
+    color: #26332d;
+    font-size: 15px;
+}
+
+.weeklyField small {
+    display: block;
+    margin-top: 6px;
+    color: #7a867f;
+    font-size: 12px;
+}
+
+.weeklyField input:disabled {
+    background: #eef1ec;
+    color: #8b948d;
+    cursor: not-allowed;
+}
+
+.readonlyInput {
+    background: #f3f7f1;
+    color: #5b6a61;
+}
+
+.weeklyEditorPanel {
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(64, 80, 71, 0.12);
+    box-shadow: 0 16px 38px rgba(56, 64, 58, 0.07);
+    padding: 18px;
+    margin-bottom: 12px;
+}
+
+.weeklyPanelHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.weeklyPanelHeader > button {
+    flex-shrink: 0;
+}
+
+.weeklyHeaderActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.weeklyPanelHeader h2,
+.weeklySectionTitle h2 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 0;
+}
+
+.titleEditorGrid,
+.servingEditorGrid,
+.offeringGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.offeringGrid {
+    grid-template-columns: 220px;
+}
+
+.titleInfoPreview {
+    background: #fff;
+    border: 1px solid #d8dfd9;
+    border-radius: 7px;
+    padding: 12px;
+}
+
+.titleInfoPreview p {
+    margin: 0;
+    color: #26332d;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.titleInfoPreview p + p {
+    margin-top: 5px;
+}
+
+.titleInfoPreview span {
+    display: inline-block;
+    width: 72px;
+    color: #6e4a22;
+    font-size: 15px;
+    font-weight: 700;
+    vertical-align: baseline;
+}
+
+.titleEditorGrid .weeklyField:nth-child(2) {
+    grid-column: span 2;
+}
+
+.weeklyBulkTextarea {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 260px;
+    border: 1px solid #d8dfd9;
+    background: #fff;
+    border-radius: 7px;
+    padding: 14px 15px;
+    resize: vertical;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #26332d;
+}
+
+.titheRow button {
+    border: none;
+    border-radius: 7px;
+    background: #d36a59;
+    color: #fff;
+    padding: 9px 10px;
+    cursor: pointer;
+}
+
+.titheRow button:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+}
+
+.titheList {
+    display: grid;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.offeringAccent .titheTitle {
+    margin-top: 24px;
+}
+
+.titheRow {
+    display: grid;
+    grid-template-columns: 150px 170px auto;
+    gap: 8px;
+    justify-content: start;
+}
+
+.titheAddBtn {
+    width: 38px;
+    height: 38px;
+    border: 1px dashed #d8b16f;
+    border-radius: 999px;
+    background: #fff8ea;
+    color: #9a6828;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    justify-self: center;
+}
+
+.jointServiceToggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding: 9px 12px;
+    border: 1px solid #d7e2dc;
+    border-radius: 7px;
+    background: #f3f7f1;
+    color: #2f6f55;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.jointServiceToggle input {
+    width: 18px;
+    height: 18px;
+}
+
+.announcementAccent { border-top: 5px solid #dc846b; }
+.prayerAccent { border-top: 5px solid #6b967b; }
+.offeringAccent { border-top: 5px solid #d9a757; }
+.servingAccent { border-top: 5px solid #5b879f; }
+.titleAccent { border-top: 5px solid #d36a59; }
+
+.weeklyEmpty {
+    background: #fff;
+    border: 1px solid rgba(64, 80, 71, 0.12);
+    border-radius: 8px;
+    padding: 28px;
+    text-align: center;
+    color: #68746d;
+}
+
+.viewMode {
+    background:
+        radial-gradient(circle at 88% 8%, rgba(246, 193, 116, 0.32), transparent 28%),
+        radial-gradient(circle at 9% 48%, rgba(129, 183, 151, 0.25), transparent 24%),
+        #fffaf0;
+}
+
+.archiveSelect {
+    min-width: 180px;
+}
+
+.weeklyArchiveFooter {
+    max-width: 1080px;
+    margin: 14px auto 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.weeklyReportCanvas {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 252, 240, 0.95) 100%);
+    border: 1px solid rgba(64, 80, 71, 0.12);
+    box-shadow: 0 22px 70px rgba(47, 63, 55, 0.13);
+    padding: 28px;
+}
+
+.weeklyReportCanvas::before,
+.weeklyReportCanvas::after {
+    content: "";
+    position: absolute;
+    border-radius: 42% 58% 50% 50%;
+    z-index: 0;
+}
+
+.weeklyReportCanvas::before {
+    width: 230px;
+    height: 170px;
+    background: rgba(239, 183, 111, 0.34);
+    right: -58px;
+    top: -42px;
+}
+
+.weeklyReportCanvas::after {
+    width: 220px;
+    height: 180px;
+    background: rgba(111, 165, 132, 0.22);
+    left: -68px;
+    bottom: 22%;
+}
+
+.weeklyReportHero,
+.weeklyReportGrid,
+.weeklyBottomGrid {
+    position: relative;
+    z-index: 1;
+}
+
+.weeklyReportHero {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.weeklyChurch {
+    margin: 0 0 8px;
+    color: #47554d;
+    font-weight: 800;
+}
+
+.weeklyReportHero h1 {
+    margin: 0;
+    color: #174d58;
+    font-size: 56px;
+    line-height: 1.02;
+    letter-spacing: 0;
+}
+
+.weeklyReportHero p {
+    margin: 10px 0 0;
+    color: #586961;
+}
+
+.weeklyReportHero strong {
+    display: block;
+    margin-top: 14px;
+    color: #426b55;
+}
+
+.weeklyReportHero aside {
+    align-self: start;
+    background: #f6dfb8;
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.weeklyReportHero aside b {
+    display: block;
+    color: #2f6f55;
+    font-size: 20px;
+    line-height: 1.45;
+}
+
+.weeklyReportGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.weeklyReportSection,
+.weeklyInfoCard {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(64, 80, 71, 0.12);
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.weeklyNumberList {
+    margin: 12px 0 0;
+    padding-left: 22px;
+    color: #56635d;
+    line-height: 1.75;
+}
+
+.weeklyNumberList li + li {
+    margin-top: 8px;
+}
+
+.weeklyMuted {
+    color: #8c958f;
+}
+
+.weeklyBottomGrid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.weeklyInfoCard h2 {
+    margin: 4px 0 0;
+    font-size: 42px;
+    color: #2f6f55;
+}
+
+.weeklyInfoCard .weeklySectionTitle h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #26332d;
+}
+
+.attendanceCountLine {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.attendanceCountLine small {
+    color: #69756d;
+    font-size: 13px;
+}
+
+.weeklyInfoCard p {
+    margin: 0 0 16px;
+    color: #6e7b73;
+}
+
+.offeringTotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e4e7df;
+    padding-top: 14px;
+}
+
+.offeringTotal strong {
+    color: #bd6249;
+    font-size: 22px;
+}
+
+.titheChips {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-top: 12px;
+}
+
+.titheChips span {
+    background: #f7ead4;
+    color: #6e4a22;
+    border-radius: 7px;
+    padding: 9px 11px;
+    font-size: 16px;
+    line-height: 1.35;
+}
+
+.servingTable {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.servingRow {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 8px;
+    align-items: center;
+    background: #f3f7f1;
+    border-radius: 7px;
+    padding: 9px 10px;
+}
+
+.servingRow b {
+    color: #2f6f55;
+}
+
+.servingRow span {
+    color: #536158;
+}
+
+.jointServiceNotice {
+    margin-top: 12px;
+    border-radius: 8px;
+    background: #f3f7f1;
+    border: 1px solid #dbe7de;
+    color: #2f6f55;
+    padding: 18px;
+    font-size: 20px;
+    text-align: center;
+}
+
+@media (max-width: 860px) {
+    .weeklyEditHero,
+    .weeklyReportHero,
+    .weeklyReportGrid,
+    .weeklyBottomGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .titleEditorGrid,
+    .servingEditorGrid,
+    .offeringGrid,
+    .servingTable {
+        grid-template-columns: 1fr;
+    }
+
+    .titleEditorGrid .weeklyField:nth-child(2) {
+        grid-column: auto;
+    }
+
+    .weeklyReportHero h1 {
+        font-size: 44px;
+    }
+
+    .weeklyCalendarPopover {
+        right: auto;
+        left: 14px;
+    }
+}
+
+@media (max-width: 560px) {
+    .weeklyPage {
+        padding: 12px;
+    }
+
+    .weeklyTopbar {
+        justify-content: stretch;
+    }
+
+    .archiveSelect,
+    .archiveSelect select {
+        width: 100%;
+    }
+
+    .weeklyEditHero,
+    .weeklyEditorPanel,
+    .weeklyReportCanvas {
+        padding: 15px;
+    }
+
+    .weeklyEditHero h1,
+    .weeklyReportHero h1 {
+        font-size: 34px;
+    }
+
+    .weeklyBulkTextarea {
+        min-height: 220px;
+    }
+
+    .titheRow {
+        grid-template-columns: 1fr;
+    }
+
+    .weeklyPanelHeader {
+        flex-direction: column;
+    }
+
+    .weeklyPanelHeader > button,
+    .weeklyHeaderActions,
+    .weeklyHeaderActions button {
+        width: 100%;
+    }
+}

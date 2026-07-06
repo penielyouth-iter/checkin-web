@@ -1,9 +1,16 @@
 .recordPage {
+    position: relative;
     min-height: 100vh;
     background: #f7efe3;
     color: #25312c;
     padding: 14px;
     box-sizing: border-box;
+}
+
+.recordContent {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
 }
 
 .recordHeader {

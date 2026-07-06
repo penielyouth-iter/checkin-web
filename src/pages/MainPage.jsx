@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import Banner from '../components/Banner.jsx';
 import SectionBlock from '../components/SectionBlock.jsx';
 import AdminPanel from '../components/AdminPanel.jsx';
 
@@ -286,10 +285,6 @@ function MainPage() {
         }
     };
 
-    const handleGoToRecord = () => {
-        navigate('/record', { state: { from: 'main' } });
-    };
-
     const [uploading, setUploading] = useState(false);
 
     // ── Admin ─────────────────────────────────────────────────────────────────
@@ -312,6 +307,7 @@ function MainPage() {
     if (loading || !structure) {
         return (
             <div className="container" style={{ paddingTop: 60, textAlign: 'center', color: '#888' }}>
+                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
                 載入中…
             </div>
         );
@@ -324,7 +320,10 @@ function MainPage() {
 
     return (
         <div className="container">
-            <Banner />
+            <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
+            <header className="checkinHeader">
+                <h1>有意思點點名</h1>
+            </header>
 
             {/* ── Info Section ── */}
             <div className="block" style={{ textAlign: 'left' }}>
@@ -423,9 +422,6 @@ function MainPage() {
                     </select>
                     <button className="button" onClick={handleStartGrouping} disabled={uploading}>
                         <span className="buttonText">{uploading ? '上傳中…' : '分組'}</span>
-                    </button>
-                    <button className="button" onClick={handleGoToRecord}>
-                        <span className="buttonText">檢視紀錄</span>
                     </button>
                 </div>
             </div>
