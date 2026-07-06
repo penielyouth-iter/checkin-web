@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/GroupPage.css';
 
 const GroupPage = () => {
@@ -16,6 +17,7 @@ const GroupPage = () => {
     if (tableData.length === 0) {
         return (
             <div className="groupContainer">
+                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
                 <div className="groupEmpty">
                     <p>沒有分組資料，請先回主畫面進行分組。</p>
                 </div>
@@ -25,6 +27,7 @@ const GroupPage = () => {
 
     return (
         <div className="groupContainer">
+            <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
             <table className="groupTable">
                 <thead>
                     <tr style={{ height: tableHeight[0] }}>

@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { get, set } from 'firebase/database';
 import { recordDbRef, structureDbRef } from "../services/firebase";
 import { JSONS } from '../constants/AssetPaths';
@@ -246,115 +246,121 @@ const RecordPage = () => {
     const handleLoadRecord = record => {
         if (!window.confirm(`讀入 ${record.date} 的紀錄並回到主畫面？目前主畫面的勾選狀態會被這筆紀錄覆蓋。`)) return;
         sessionStorage.setItem('loadedRecordData', JSON.stringify(buildLoadPayload(record)));
-        navigate('/');
+        navigate('/checkin');
     };
 
     if (loading) {
         return (
             <div className="recordPage">
-                <div className="recordEmpty">載入中…</div>
+                <div className="recordContent">
+                    <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
+                    <div className="recordEmpty">載入中…</div>
+                </div>
             </div>
         );
     }
 
     return (
         <div className="recordPage">
-            <header className="recordHeader">
-                <div>
-                    <h1>出席紀錄</h1>
-                    <p>{latestRecord ? `最近一次：${formatDisplayDate(latestRecord.date)}，共 ${latestRecord.totalCount} 人` : '目前沒有紀錄'}</p>
-                </div>
-                <div className="rangeTabs">
-                    {RANGE_OPTIONS.map(option => (
-                        <button
-                            key={option.label}
-                            className={rangeMonths === option.months ? 'rangeTab active' : 'rangeTab'}
-                            onClick={() => setRangeMonths(option.months)}
-                        >
-                            {option.label}
-                        </button>
-                    ))}
-                </div>
-            </header>
+            <div className="recordContent">
+                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
+                <header className="recordHeader">
+                    <div>
+                        <h1>出席紀錄</h1>
+                        <p>{latestRecord ? `最近一次：${formatDisplayDate(latestRecord.date)}，共 ${latestRecord.totalCount} 人` : '目前沒有紀錄'}</p>
+                    </div>
+                    <div className="rangeTabs">
+                        {RANGE_OPTIONS.map(option => (
+                            <button
+                                key={option.label}
+                                className={rangeMonths === option.months ? 'rangeTab active' : 'rangeTab'}
+                                onClick={() => setRangeMonths(option.months)}
+                            >
+                                {option.label}
+                            </button>
+                        ))}
+                    </div>
+                </header>
 
-            <section className="summaryGrid">
-                <div className="summaryItem">
-                    <span>週數</span>
-                    <strong>{summary.weeks}</strong>
-                </div>
-                <div className="summaryItem">
-                    <span>平均總出席</span>
-                    <strong>{summary.averageTotal}</strong>
-                </div>
-                <div className="summaryItem">
-                    <span>平均大人</span>
-                    <strong>{summary.averageAdult}</strong>
-                </div>
-                <div className="summaryItem">
-                    <span>平均兒童</span>
-                    <strong>{summary.averageChild}</strong>
-                </div>
-            </section>
+                <section className="summaryGrid">
+                    <div className="summaryItem">
+                        <span>週數</span>
+                        <strong>{summary.weeks}</strong>
+                    </div>
+                    <div className="summaryItem">
+                        <span>平均總出席</span>
+                        <strong>{summary.averageTotal}</strong>
+                    </div>
+                    <div className="summaryItem">
+                        <span>平均大人</span>
+                        <strong>{summary.averageAdult}</strong>
+                    </div>
+                    <div className="summaryItem">
+                        <span>平均兒童</span>
+                        <strong>{summary.averageChild}</strong>
+                    </div>
+                </section>
 
-            <section className="recordSection">
-                <div className="recordSectionHeader">
-                    <h2>出席趨勢</h2>
-                    <span>{visibleRecords.length} 筆</span>
-                </div>
-                <AttendanceChart records={visibleRecords} />
-            </section>
+                <section className="recordSection">
+                    <div className="recordSectionHeader">
+                        <h2>出席趨勢</h2>
+                        <span>{visibleRecords.length} 筆</span>
+                    </div>
+                    <AttendanceChart records={visibleRecords} />
+                </section>
 
-            <section className="recordSection">
-                <div className="recordSectionHeader">
-                    <h2>每週明細</h2>
-                    <span>點選週次查看名單</span>
-                </div>
-                <div className="weeklyList">
-                    {visibleRecords.map(record => {
-                        const isExpanded = expandedDate === record.date;
-                        return (
-                            <article key={record.date} className="weeklyItem">
-                                <button className="weeklySummary" onClick={() => setExpandedDate(isExpanded ? null : record.date)}>
-                                    <span className="weeklyDate">{formatDisplayDate(record.date)}</span>
-                                    <span className="weeklyMeta">{record.worship || '聚會'} · {record.speaker || '講員未填'}</span>
-                                    <span className="weeklyCounts">
-                                        <b>{record.totalCount}</b>
-                                        <small>大人 {record.adultCount} / 兒童 {record.childCount}</small>
-                                    </span>
-                                </button>
+                <section className="recordSection">
+                    <div className="recordSectionHeader">
+                        <h2>每週明細</h2>
+                        <span>點選週次查看名單</span>
+                    </div>
+                    <div className="weeklyList">
+                        {visibleRecords.map(record => {
+                            const isExpanded = expandedDate === record.date;
+                            return (
+                                <article key={record.date} className="weeklyItem">
+                                    <button className="weeklySummary" onClick={() => setExpandedDate(isExpanded ? null : record.date)}>
+                                        <span className="weeklyDate">{formatDisplayDate(record.date)}</span>
+                                        <span className="weeklyMeta">{record.worship || '聚會'} · {record.speaker || '講員未填'}</span>
+                                        <span className="weeklyCounts">
+                                            <b>{record.totalCount}</b>
+                                            <small>大人 {record.adultCount} / 兒童 {record.childCount}</small>
+                                        </span>
+                                    </button>
 
-                                {isExpanded && (
-                                    <div className="weeklyDetail">
-                                        <div className="detailColumns">
-                                            <div>
-                                                <h3>大人出席 {record.adultCount}</h3>
-                                                <div className="nameList">
-                                                    {record.adultNames.length > 0
-                                                        ? record.adultNames.map(name => <span key={name}>{name}</span>)
-                                                        : <em>此筆紀錄沒有名單</em>}
+                                    {isExpanded && (
+                                        <div className="weeklyDetail">
+                                            <div className="detailColumns">
+                                                <div>
+                                                    <h3>大人出席 {record.adultCount}</h3>
+                                                    <div className="nameList">
+                                                        {record.adultNames.length > 0
+                                                            ? record.adultNames.map(name => <span key={name}>{name}</span>)
+                                                            : <em>此筆紀錄沒有名單</em>}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h3>兒童出席 {record.childCount}</h3>
+                                                    <div className="nameList">
+                                                        {record.childNames.length > 0
+                                                            ? record.childNames.map(name => <span key={name}>{name}</span>)
+                                                            : <em>無兒童名單</em>}
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <h3>兒童出席 {record.childCount}</h3>
-                                                <div className="nameList">
-                                                    {record.childNames.length > 0
-                                                        ? record.childNames.map(name => <span key={name}>{name}</span>)
-                                                        : <em>無兒童名單</em>}
-                                                </div>
+                                            <div className="mealRow">用餐 {record.mealCount} 人</div>
+                                            <div className="recordActions">
+                                                <button className="loadRecordBtn" onClick={() => handleLoadRecord(record)}>讀入紀錄</button>
+                                                <button className="deleteRecordBtn" onClick={() => handleDelete(record)}>刪除紀錄</button>
                                             </div>
                                         </div>
-                                        <div className="mealRow">用餐 {record.mealCount} 人</div>
-                                        <div className="recordActions">
-                                            <button className="loadRecordBtn" onClick={() => handleLoadRecord(record)}>讀入紀錄</button>
-                                            <button className="deleteRecordBtn" onClick={() => handleDelete(record)}>刪除紀錄</button>
-                                        </div>
-                                    </div>
-                                )}
-                            </article>
-                        );
-                    })}
-                </div>
-            </section>
+                                    )}
+                                </article>
+                            );
+                        })}
+                    </div>
+                </section>
+            </div>
         </div>
     );
 };

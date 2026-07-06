@@ -12,4 +12,5 @@ export const dbEndpoints = {
     FAMILIES: "peniel/families_dev",
     RECORDS: "peniel/weeklyrecords",
     STRUCTURE: "peniel/structure_v2",
+    WEEKLY_REPORTS: "peniel/weekly_reports",
 };

@@ -1,4 +1,5 @@
 .groupContainer {
+    position: relative;
     height: 100vh;
     padding: 6px;
     box-sizing: border-box;
