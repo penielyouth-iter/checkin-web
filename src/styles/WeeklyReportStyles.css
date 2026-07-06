@@ -665,12 +665,6 @@
     }
 
     .weeklyPanelHeader {
-        flex-direction: column;
-    }
-
-    .weeklyPanelHeader > button,
-    .weeklyHeaderActions,
-    .weeklyHeaderActions button {
-        width: 100%;
+        align-items: flex-start;
     }
 }
