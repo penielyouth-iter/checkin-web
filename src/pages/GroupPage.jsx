@@ -15,8 +15,10 @@ const GroupPage = () => {
 
     if (tableData.length === 0) {
         return (
-            <div className="groupContainer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <p style={{ color: '#888', fontSize: 18 }}>沒有分組資料，請先回主畫面進行分組。</p>
+            <div className="groupContainer">
+                <div className="groupEmpty">
+                    <p>沒有分組資料，請先回主畫面進行分組。</p>
+                </div>
             </div>
         );
     }

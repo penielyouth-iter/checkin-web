@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -21,11 +22,6 @@ const formatDate = d => {
     const m = String(d.getMonth() + 1).padStart(2, '0');
     const day = String(d.getDate()).padStart(2, '0');
     return `${y}-${m}-${day}`;
-};
-
-const openHashRoute = route => {
-    const base = `${window.location.origin}${window.location.pathname}`;
-    window.open(`${base}#/${route.replace(/^\//, '')}`, '_blank');
 };
 
 const buildDisplaySections = (structure, searchTerm) => {
@@ -89,6 +85,8 @@ const applyLoadedRecordStates = (structure, loadedRecord) => {
 };
 
 function MainPage() {
+    const navigate = useNavigate();
+
     // ── Data ──────────────────────────────────────────────────────────────────
     const [structure, setStructure] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -236,26 +234,50 @@ function MainPage() {
         const speakers = structure.speakers;
         const worship = worshipIdx < worshipTypes.length ? worshipTypes[worshipIdx] : worshipOther;
         const speaker = speakerIdx < speakers.length ? speakers[speakerIdx] : speakerOther;
+        const families = structureToFamilies(structure);
         await uploadWeeklyRecord({
             date: selectedDate,
             worship,
             speaker,
-            families: structureToFamilies(structure),
+            families,
         });
     };
 
+    const goToGrouping = families => {
+        const selectedRange = groupingRangeOptions.find(option => option.value === groupingRange) || groupingRangeOptions[0];
+        const result = startGrouping({
+            families,
+            groupsize: selectedRange.groupsize,
+            remainder: selectedRange.remainder,
+        });
+        sessionStorage.setItem('groupResult', JSON.stringify(result));
+        navigate('/group', { state: { from: 'main' } });
+    };
+
+    const countArrivedMembers = families =>
+        families.reduce((sum, family) =>
+            sum + family.members.filter(member => member.arriveState).length,
+            0
+        );
+
     const handleStartGrouping = async () => {
+        const families = structureToFamilies(structure);
+        const shouldUpload = window.confirm('是否要上傳簽到紀錄？\n\n按「確定」會先上傳再分組。\n按「取消」會直接分組，不上傳到雲端。');
+
+        if (!shouldUpload) {
+            goToGrouping(families);
+            return;
+        }
+
+        if (countArrivedMembers(families) === 0) {
+            const confirmedEmptyUpload = window.confirm('今天的出席人數是 0 人，確定仍然要上傳這筆簽到紀錄嗎？');
+            if (!confirmedEmptyUpload) return;
+        }
+
         setUploading(true);
         try {
             await uploadCurrentRecord();
-            const selectedRange = groupingRangeOptions.find(option => option.value === groupingRange) || groupingRangeOptions[0];
-            const result = startGrouping({
-                families: structureToFamilies(structure),
-                groupsize: selectedRange.groupsize,
-                remainder: selectedRange.remainder,
-            });
-            sessionStorage.setItem('groupResult', JSON.stringify(result));
-            openHashRoute('group');
+            goToGrouping(families);
         } catch (e) {
             alert('上傳失敗，未進行分組。請檢查網路連線。');
             console.error(e);
@@ -265,7 +287,7 @@ function MainPage() {
     };
 
     const handleGoToRecord = () => {
-        openHashRoute('record');
+        navigate('/record', { state: { from: 'main' } });
     };
 
     const [uploading, setUploading] = useState(false);
@@ -400,7 +422,7 @@ function MainPage() {
                         ))}
                     </select>
                     <button className="button" onClick={handleStartGrouping} disabled={uploading}>
-                        <span className="buttonText">{uploading ? '上傳中…' : '上傳&分組'}</span>
+                        <span className="buttonText">{uploading ? '上傳中…' : '分組'}</span>
                     </button>
                     <button className="button" onClick={handleGoToRecord}>
                         <span className="buttonText">檢視紀錄</span>

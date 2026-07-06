@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { get, set } from 'firebase/database';
 import { recordDbRef, structureDbRef } from "../services/firebase";
 import { JSONS } from '../constants/AssetPaths';
@@ -10,6 +11,7 @@ const RANGE_OPTIONS = [
     { label: '一年', months: 12 },
     { label: '全部', months: null },
 ];
+const ADMIN_PASSWORD = 'admin123';
 
 const getFieldValue = (record, key) =>
     (record.field || []).find(field => field.key === key)?.value;
@@ -170,6 +172,7 @@ function AttendanceChart({ records }) {
 }
 
 const RecordPage = () => {
+    const navigate = useNavigate();
     const [records, setRecords] = useState([]);
     const [childNameSet, setChildNameSet] = useState(new Set());
     const [expandedDate, setExpandedDate] = useState(null);
@@ -221,6 +224,12 @@ const RecordPage = () => {
     };
 
     const handleDelete = async record => {
+        const password = window.prompt('請輸入管理員密碼');
+        if (password === null) return;
+        if (password !== ADMIN_PASSWORD) {
+            alert('輸入密碼錯誤');
+            return;
+        }
         if (!window.confirm(`確定刪除 ${record.date} 的紀錄？`)) return;
         const nextRecords = records.filter(item => item.date !== record.date);
         setRecords(nextRecords);
@@ -237,8 +246,7 @@ const RecordPage = () => {
     const handleLoadRecord = record => {
         if (!window.confirm(`讀入 ${record.date} 的紀錄並回到主畫面？目前主畫面的勾選狀態會被這筆紀錄覆蓋。`)) return;
         sessionStorage.setItem('loadedRecordData', JSON.stringify(buildLoadPayload(record)));
-        const base = `${window.location.origin}${window.location.pathname}`;
-        window.location.href = `${base}#/`;
+        navigate('/');
     };
 
     if (loading) {
