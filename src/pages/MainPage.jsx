@@ -306,8 +306,8 @@ function MainPage({ isAdmin }) {
 
     return (
         <div className="container">
-            <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
             <header className="checkinHeader">
+                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
                 <h1>有意思點點名</h1>
             </header>
 

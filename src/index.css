@@ -25,8 +25,8 @@ code {
 
 .homeLinkFloating {
   position: absolute;
-  top: 12px;
-  right: max(12px, calc((100vw - 1080px) / 2 + 12px));
+  top: 14px;
+  right: 14px;
   z-index: 5;
 }
 

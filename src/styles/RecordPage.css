@@ -14,10 +14,17 @@
 }
 
 .recordHeader {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 14px;
     margin-bottom: 14px;
+    padding-right: 48px;
+}
+
+.recordHeader .homeLinkFloating {
+    top: 0;
+    right: 0;
 }
 
 .recordHeader h1 {
@@ -292,10 +299,11 @@
 }
 
 .recordEmpty {
+    position: relative;
     background: #fff;
     border: 1px solid #e1ddd5;
     border-radius: 8px;
-    padding: 22px;
+    padding: 22px 54px;
     text-align: center;
     color: #6f786f;
 }

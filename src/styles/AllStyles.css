@@ -14,8 +14,15 @@
 
 /* Block */
 .checkinHeader {
+    position: relative;
     text-align: left;
     margin: 18px 0 14px;
+    padding-right: 48px;
+}
+
+.checkinHeader .homeLinkFloating {
+    top: 0;
+    right: 0;
 }
 
 .checkinHeader h1 {

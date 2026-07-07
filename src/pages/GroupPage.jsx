@@ -17,8 +17,8 @@ const GroupPage = () => {
     if (tableData.length === 0) {
         return (
             <div className="groupContainer">
-                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
                 <div className="groupEmpty">
+                    <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
                     <p>沒有分組資料，請先回主畫面進行分組。</p>
                 </div>
             </div>

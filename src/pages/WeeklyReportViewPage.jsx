@@ -82,8 +82,10 @@ const WeeklyReportViewPage = () => {
     if (loading) {
         return (
             <main className="weeklyPage">
-                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
-                <div className="weeklyEmpty">週報資料載入中...</div>
+                <div className="weeklyEmpty">
+                    <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
+                    週報資料載入中...
+                </div>
             </main>
         );
     }
@@ -91,16 +93,18 @@ const WeeklyReportViewPage = () => {
     if (!selectedReport) {
         return (
             <main className="weeklyPage">
-                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
-                <div className="weeklyEmpty">目前還沒有週報紀錄。</div>
+                <div className="weeklyEmpty">
+                    <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
+                    目前還沒有週報紀錄。
+                </div>
             </main>
         );
     }
 
     return (
         <main className="weeklyPage viewMode">
-            <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
             <article className="weeklyReportCanvas">
+                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
                 <section className="weeklyReportHero">
                     <div>
                         <p className="weeklyChurch">中華基督教便以利教會木柵堂</p>

@@ -284,16 +284,18 @@ const WeeklyReportEditPage = ({ isAdmin }) => {
     if (loading) {
         return (
             <main className="weeklyPage">
-                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
-                <div className="weeklyEmpty">週報資料載入中...</div>
+                <div className="weeklyEmpty">
+                    <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
+                    週報資料載入中...
+                </div>
             </main>
         );
     }
 
     return (
         <main className="weeklyPage">
-            <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
             <section className="weeklyEditHero">
+                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
                 <div>
                     <p className="weeklyKicker">填寫週報資訊</p>
                     <h1>{report.title.main}</h1>

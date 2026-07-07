@@ -252,8 +252,10 @@ const RecordPage = ({ isAdmin }) => {
         return (
             <div className="recordPage">
                 <div className="recordContent">
-                    <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
-                    <div className="recordEmpty">載入中…</div>
+                    <div className="recordEmpty">
+                        <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
+                        載入中…
+                    </div>
                 </div>
             </div>
         );
@@ -262,8 +264,8 @@ const RecordPage = ({ isAdmin }) => {
     return (
         <div className="recordPage">
             <div className="recordContent">
-                <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
                 <header className="recordHeader">
+                    <Link className="homeLink homeLinkFloating" to="/" aria-label="回主畫面"><span className="homeIcon" aria-hidden="true" /></Link>
                     <div>
                         <h1>出席紀錄</h1>
                         <p>{latestRecord ? `最近一次：${formatDisplayDate(latestRecord.date)}，共 ${latestRecord.totalCount} 人` : '目前沒有紀錄'}</p>
