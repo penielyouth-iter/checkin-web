@@ -178,6 +178,16 @@ const WeeklyReportEditPage = () => {
 
     const reportDate = useMemo(() => reportDateFromInput(dateInput), [dateInput]);
 
+    const resetToBlankReport = async () => {
+        const blank = createBlankReport(reportDate);
+        const attendance = await fetchReportAttendance(blank);
+        setReport({
+            ...blank,
+            attendance,
+        });
+        setTitleInfoEditing(false);
+    };
+
     useEffect(() => {
         const load = async () => {
             setLoading(true);
@@ -203,44 +213,45 @@ const WeeklyReportEditPage = () => {
         load();
     }, [reportDate]);
 
-    const saveSection = async (label, patch) => {
-        if (!hasWeeklyReportContent({ ...report, ...patch })) {
-            alert('尚未填寫週報內容，不會儲存紀錄。');
-            return;
-        }
+    const saveReportPatch = async (label, patch) => {
+        const nextReport = mergeReportWithDefault({
+            ...report,
+            ...patch,
+        });
         setSaving(label);
         try {
-            await saveWeeklyReportSection(report.id, patch);
-            alert(`${label}已儲存`);
+            if (hasWeeklyReportContent(nextReport)) {
+                await saveWeeklyReportSection(report.id, patch);
+                setReport(nextReport);
+                alert(`${label}已儲存`);
+                return true;
+            } else {
+                await deleteWeeklyReport(report.id);
+                await resetToBlankReport();
+                alert('週報內容已清空');
+                return true;
+            }
         } catch (error) {
             console.error(error);
             alert('儲存失敗，請檢查網路連線。');
+            return false;
         } finally {
             setSaving('');
         }
     };
 
+    const saveSection = async (label, patch) => {
+        await saveReportPatch(label, patch);
+    };
+
     const saveTitleInfo = async () => {
-        if (!hasWeeklyReportContent(report)) {
-            alert('尚未填寫週報內容，不會儲存紀錄。');
-            return;
-        }
-        setSaving('標題與年度主題');
-        try {
-            await saveWeeklyReportSection(report.id, {
-                title: report.title,
-                annual_theme: report.annual_theme,
-                date: report.date,
-                time: report.time,
-            });
-            setTitleInfoEditing(false);
-            alert('標題與年度主題已儲存');
-        } catch (error) {
-            console.error(error);
-            alert('儲存失敗，請檢查網路連線。');
-        } finally {
-            setSaving('');
-        }
+        const saved = await saveReportPatch('標題與年度主題', {
+            title: report.title,
+            annual_theme: report.annual_theme,
+            date: report.date,
+            time: report.time,
+        });
+        if (saved) setTitleInfoEditing(false);
     };
 
     const handleDeleteReport = async () => {
@@ -256,13 +267,7 @@ const WeeklyReportEditPage = () => {
         setSaving('刪除本週週報');
         try {
             await deleteWeeklyReport(report.id);
-            const blank = createBlankReport(reportDate);
-            const attendance = await fetchReportAttendance(blank);
-            setReport({
-                ...blank,
-                attendance,
-            });
-            setTitleInfoEditing(false);
+            await resetToBlankReport();
             alert('本週週報已刪除');
         } catch (error) {
             console.error(error);
