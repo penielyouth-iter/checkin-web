@@ -1,7 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { buildChildNameSet, createBlankReport, findReportAttendance } from './weeklyReportUtils';
+import { buildChildNameSet, createBlankReport, findReportAttendance, mergeReportWithDefault } from './weeklyReportUtils';
 
 describe('weeklyReportUtils', () => {
+    it('keeps four default tithe rows for blank and legacy reports', () => {
+        expect(createBlankReport(new Date('2026-05-30T00:00:00')).offering.tithe).toHaveLength(4);
+        expect(mergeReportWithDefault({
+            id: '115-05-30',
+            offering: {
+                tithe: [{ code: 'A', amount: 100 }],
+            },
+        }).offering.tithe).toHaveLength(4);
+    });
+
     it('finds the latest attendance record before the report date', () => {
         const report = createBlankReport(new Date('2026-05-30T00:00:00'));
         const records = [

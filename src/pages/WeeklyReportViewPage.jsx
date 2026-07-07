@@ -5,6 +5,13 @@ import { formatReportDateLine, servingRoles } from '../utils/weeklyReportUtils';
 import '../styles/WeeklyReportStyles.css';
 
 const money = value => Number(value || 0).toLocaleString('zh-TW');
+const titheSlots = tithe => [
+    ...(Array.isArray(tithe) ? tithe : []),
+    { code: '', amount: 0 },
+    { code: '', amount: 0 },
+    { code: '', amount: 0 },
+    { code: '', amount: 0 },
+].slice(0, Math.max(4, Array.isArray(tithe) ? tithe.length : 0));
 
 const ListSection = ({ label, title, items }) => (
     <section className="weeklyReportSection">
@@ -128,12 +135,16 @@ const WeeklyReportViewPage = () => {
                         </div>
                         <p>上週聚會人數</p>
                         <div className="offeringTotal">
-                            <b>奉獻合計</b>
+                            <b className="weeklyTitheHeading">奉獻合計</b>
                             <strong>${money(selectedReport.offering?.total)}</strong>
                         </div>
+                        <h3 className="weeklyTitheHeading">什一奉獻</h3>
                         <div className="titheChips">
-                            {(selectedReport.offering?.tithe || []).filter(item => item.code || item.amount).map((item, idx) => (
-                                <span key={idx}>{item.code || '未填代號'} ${money(item.amount)}</span>
+                            {titheSlots(selectedReport.offering?.tithe).map((item, idx) => (
+                                <span key={idx}>
+                                    {item.code || '\u00A0'}
+                                    {item.code || item.amount ? ` $${money(item.amount)}` : '\u00A0'}
+                                </span>
                             ))}
                         </div>
                     </div>

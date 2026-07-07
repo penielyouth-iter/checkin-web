@@ -17,6 +17,8 @@ const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'];
 const blankTitheRows = () => ([
     { code: '', amount: 0 },
     { code: '', amount: 0 },
+    { code: '', amount: 0 },
+    { code: '', amount: 0 },
 ]);
 
 const pad2 = value => String(value).padStart(2, '0');
@@ -114,12 +116,12 @@ export const mergeReportWithDefault = report => {
         offering: {
             ...blank.offering,
             ...(report?.offering || {}),
-            tithe: Array.isArray(report?.offering?.tithe) && report.offering.tithe.length >= 2
+            tithe: Array.isArray(report?.offering?.tithe) && report.offering.tithe.length >= 4
                 ? report.offering.tithe
                 : [
                     ...(Array.isArray(report?.offering?.tithe) ? report.offering.tithe : []),
                     ...blankTitheRows(),
-                ].slice(0, 2),
+                ].slice(0, 4),
         },
         next_week_joint_service: !!report?.next_week_joint_service,
         next_week_serving: {

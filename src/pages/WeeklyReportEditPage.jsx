@@ -149,7 +149,7 @@ const OfferingEditor = ({ offering, onOfferingChange, action }) => {
                         <input type="number" min="0" value={item.amount} onChange={e => updateTithe(idx, 'amount', e.target.value)} placeholder="金額" />
                         <button
                             onClick={() => onOfferingChange({ ...offering, tithe: offering.tithe.filter((_, itemIdx) => itemIdx !== idx) })}
-                            disabled={offering.tithe.length <= 2}
+                            disabled={offering.tithe.length <= 4}
                         >
                             刪除
                         </button>
