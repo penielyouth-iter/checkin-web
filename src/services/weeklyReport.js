@@ -1,4 +1,4 @@
-import { child, get, update } from 'firebase/database';
+import { child, get, remove, update } from 'firebase/database';
 import { recordDbRef, weeklyReportsDbRef } from './firebase';
 import { JSONS } from '../constants/AssetPaths';
 import {
@@ -44,6 +44,10 @@ export const saveWeeklyReportSection = async (id, patch) => {
         id,
         updatedAt: new Date().toISOString(),
     });
+};
+
+export const deleteWeeklyReport = async id => {
+    await remove(child(weeklyReportsDbRef, id));
 };
 
 export const fetchReportAttendance = async report => {

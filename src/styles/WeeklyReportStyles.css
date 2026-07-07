@@ -46,6 +46,7 @@
 
 .weeklyEditHero,
 .weeklyEditorPanel,
+.weeklyDangerZone,
 .weeklyReportCanvas,
 .weeklyEmpty {
     max-width: 1080px;
@@ -338,6 +339,29 @@
 .offeringAccent { border-top: 5px solid #d9a757; }
 .servingAccent { border-top: 5px solid #5b879f; }
 .titleAccent { border-top: 5px solid #d36a59; }
+
+.weeklyDangerZone {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+    padding-bottom: 10px;
+}
+
+.weeklyDeleteBtn {
+    border: none;
+    border-radius: 7px;
+    background: #c94c3f;
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.weeklyDeleteBtn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
 
 .weeklyEmpty {
     background: #fff;

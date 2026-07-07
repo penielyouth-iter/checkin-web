@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {
+    deleteWeeklyReport,
     fetchReportAttendance,
     fetchWeeklyReport,
     saveWeeklyReportSection,
@@ -20,6 +21,8 @@ import {
     splitPeopleInput,
 } from '../utils/weeklyReportUtils';
 import '../styles/WeeklyReportStyles.css';
+
+const ADMIN_PASSWORD = 'admin123';
 
 const formatNumberedText = items =>
     (items || []).filter(Boolean).map((item, idx) => `${idx + 1}. ${item}`).join('\n\n');
@@ -240,6 +243,35 @@ const WeeklyReportEditPage = () => {
         }
     };
 
+    const handleDeleteReport = async () => {
+        if (!window.confirm(`確定刪除 ${report.id} 的週報？刪除後無法復原。`)) return;
+
+        const password = window.prompt('請輸入管理員密碼');
+        if (password === null) return;
+        if (password !== ADMIN_PASSWORD) {
+            alert('輸入密碼錯誤');
+            return;
+        }
+
+        setSaving('刪除本週週報');
+        try {
+            await deleteWeeklyReport(report.id);
+            const blank = createBlankReport(reportDate);
+            const attendance = await fetchReportAttendance(blank);
+            setReport({
+                ...blank,
+                attendance,
+            });
+            setTitleInfoEditing(false);
+            alert('本週週報已刪除');
+        } catch (error) {
+            console.error(error);
+            alert('刪除失敗，請檢查網路連線。');
+        } finally {
+            setSaving('');
+        }
+    };
+
     const updateDate = date => {
         setDateInput(formatGregorianDate(date));
         setDatePickerOpen(false);
@@ -380,6 +412,16 @@ const WeeklyReportEditPage = () => {
                     </button>
                 )}
             />
+
+            <section className="weeklyDangerZone">
+                <button
+                    className="weeklyDeleteBtn"
+                    onClick={handleDeleteReport}
+                    disabled={saving !== ''}
+                >
+                    {saving === '刪除本週週報' ? '刪除中...' : '刪除本週週報'}
+                </button>
+            </section>
         </main>
     );
 };
