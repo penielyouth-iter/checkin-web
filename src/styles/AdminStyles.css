@@ -272,29 +272,25 @@
     background: #fff;
 }
 
-/* ── Password input at bottom ── */
-.adminPasswordSection {
-    margin-top: 30px;
+/* ── Check-in page admin entry ── */
+.adminEntrySection {
+    margin-top: 28px;
     padding: 14px 20px;
-    background: #f8f9fa;
-    border-top: 1px solid #e0e0e0;
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 10px;
 }
 
-.adminPasswordSection label {
-    font-size: 13px;
-    color: #999;
+.adminEntryButton {
+    border: none;
+    border-radius: 8px;
+    background: #2c3e50;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 10px 18px;
 }
 
-.adminPasswordInput {
-    padding: 6px 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 13px;
-    width: 150px;
-    background: #fff;
-    color: #666;
+.adminEntryButton:hover {
+    background: #1f2f3f;
 }

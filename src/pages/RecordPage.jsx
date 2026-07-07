@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { get, set } from 'firebase/database';
 import { recordDbRef, structureDbRef } from "../services/firebase";
 import { JSONS } from '../constants/AssetPaths';
+import { verifyAdminPassword } from '../constants/AdminAuth';
 import '../styles/RecordPage.css';
 
 const RANGE_OPTIONS = [
@@ -11,8 +12,6 @@ const RANGE_OPTIONS = [
     { label: '一年', months: 12 },
     { label: '全部', months: null },
 ];
-const ADMIN_PASSWORD = 'admin123';
-
 const getFieldValue = (record, key) =>
     (record.field || []).find(field => field.key === key)?.value;
 
@@ -171,7 +170,7 @@ function AttendanceChart({ records }) {
     );
 }
 
-const RecordPage = () => {
+const RecordPage = ({ isAdmin }) => {
     const navigate = useNavigate();
     const [records, setRecords] = useState([]);
     const [childNameSet, setChildNameSet] = useState(new Set());
@@ -226,7 +225,7 @@ const RecordPage = () => {
     const handleDelete = async record => {
         const password = window.prompt('請輸入管理員密碼');
         if (password === null) return;
-        if (password !== ADMIN_PASSWORD) {
+        if (!verifyAdminPassword(password)) {
             alert('輸入密碼錯誤');
             return;
         }
@@ -351,7 +350,9 @@ const RecordPage = () => {
                                             <div className="mealRow">用餐 {record.mealCount} 人</div>
                                             <div className="recordActions">
                                                 <button className="loadRecordBtn" onClick={() => handleLoadRecord(record)}>讀入紀錄</button>
-                                                <button className="deleteRecordBtn" onClick={() => handleDelete(record)}>刪除紀錄</button>
+                                                {isAdmin && (
+                                                    <button className="deleteRecordBtn" onClick={() => handleDelete(record)}>刪除紀錄</button>
+                                                )}
                                             </div>
                                         </div>
                                     )}

@@ -20,9 +20,8 @@ import {
     servingRoles,
     splitPeopleInput,
 } from '../utils/weeklyReportUtils';
+import { verifyAdminPassword } from '../constants/AdminAuth';
 import '../styles/WeeklyReportStyles.css';
-
-const ADMIN_PASSWORD = 'admin123';
 
 const formatNumberedText = items =>
     (items || []).filter(Boolean).map((item, idx) => `${idx + 1}. ${item}`).join('\n\n');
@@ -167,7 +166,7 @@ const OfferingEditor = ({ offering, onOfferingChange, action }) => {
     );
 };
 
-const WeeklyReportEditPage = () => {
+const WeeklyReportEditPage = ({ isAdmin }) => {
     const defaultDate = getNextSaturday();
     const [dateInput, setDateInput] = useState(formatGregorianDate(defaultDate));
     const [report, setReport] = useState(createBlankReport(defaultDate));
@@ -259,7 +258,7 @@ const WeeklyReportEditPage = () => {
 
         const password = window.prompt('請輸入管理員密碼');
         if (password === null) return;
-        if (password !== ADMIN_PASSWORD) {
+        if (!verifyAdminPassword(password)) {
             alert('輸入密碼錯誤');
             return;
         }
@@ -418,15 +417,17 @@ const WeeklyReportEditPage = () => {
                 )}
             />
 
-            <section className="weeklyDangerZone">
-                <button
-                    className="weeklyDeleteBtn"
-                    onClick={handleDeleteReport}
-                    disabled={saving !== ''}
-                >
-                    {saving === '刪除本週週報' ? '刪除中...' : '刪除本週週報'}
-                </button>
-            </section>
+            {isAdmin && (
+                <section className="weeklyDangerZone">
+                    <button
+                        className="weeklyDeleteBtn"
+                        onClick={handleDeleteReport}
+                        disabled={saving !== ''}
+                    >
+                        {saving === '刪除本週週報' ? '刪除中...' : '刪除本週週報'}
+                    </button>
+                </section>
+            )}
         </main>
     );
 };

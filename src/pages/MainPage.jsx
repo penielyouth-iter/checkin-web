@@ -83,7 +83,7 @@ const applyLoadedRecordStates = (structure, loadedRecord) => {
     };
 };
 
-function MainPage() {
+function MainPage({ isAdmin }) {
     const navigate = useNavigate();
 
     // ── Data ──────────────────────────────────────────────────────────────────
@@ -287,21 +287,7 @@ function MainPage() {
 
     const [uploading, setUploading] = useState(false);
 
-    // ── Admin ─────────────────────────────────────────────────────────────────
     const [adminMode, setAdminMode] = useState(false);
-    const [passwordInput, setPasswordInput] = useState('');
-
-    const handlePasswordKeyDown = e => {
-        if (e.key === 'Enter') {
-            if (passwordInput === 'admin123') {
-                setAdminMode(true);
-                setPasswordInput('');
-            } else {
-                alert('密碼錯誤');
-                setPasswordInput('');
-            }
-        }
-    };
 
     // ── Render ────────────────────────────────────────────────────────────────
     if (loading || !structure) {
@@ -426,22 +412,16 @@ function MainPage() {
                 </div>
             </div>
 
-            {/* ── Admin Password Input ── */}
-            <div className="adminPasswordSection">
-                <label htmlFor="adminPwd">🔒 管理員登入</label>
-                <input
-                    id="adminPwd"
-                    type="password"
-                    className="adminPasswordInput"
-                    placeholder="輸入密碼後按 Enter"
-                    value={passwordInput}
-                    onChange={e => setPasswordInput(e.target.value)}
-                    onKeyDown={handlePasswordKeyDown}
-                />
-            </div>
+            {isAdmin && (
+                <div className="adminEntrySection">
+                    <button className="adminEntryButton" onClick={() => setAdminMode(true)}>
+                        編輯內容
+                    </button>
+                </div>
+            )}
 
             {/* ── Admin Panel (overlay) ── */}
-            {adminMode && (
+            {isAdmin && adminMode && (
                 <AdminPanel
                     structure={structure}
                     onStructureChange={setStructure}
