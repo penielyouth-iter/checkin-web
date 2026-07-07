@@ -136,6 +136,12 @@ export const servingRoles = DEFAULT_SERVING_ROLES;
 export const formatReportDateLine = report =>
     `${report.date.year}年${pad2(report.date.month)}月${pad2(report.date.day)}日(${report.date.weekday}) ${report.time.start}-${report.time.end}`;
 
+export const formatNextWeekServingDate = report => {
+    const date = new Date(report.date.year + 1911, report.date.month - 1, report.date.day);
+    date.setDate(date.getDate() + 7);
+    return formatGregorianDate(date);
+};
+
 export const splitPeopleInput = value =>
     String(value || '')
         .split(/[、,\n]/)

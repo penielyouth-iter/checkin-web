@@ -584,10 +584,10 @@
     background: #f7ead4;
     color: #6e4a22;
     border-radius: 7px;
-    padding: 9px 11px;
-    font-size: 18px;
+    padding: 7px 10px;
+    font-size: 17px;
     line-height: 1.35;
-    min-height: 22px;
+    min-height: 20px;
 }
 
 .servingTable {

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchWeeklyReports } from '../services/weeklyReport';
-import { formatReportDateLine, servingRoles } from '../utils/weeklyReportUtils';
+import { formatNextWeekServingDate, formatReportDateLine, servingRoles } from '../utils/weeklyReportUtils';
 import '../styles/WeeklyReportStyles.css';
 
 const money = value => Number(value || 0).toLocaleString('zh-TW');
@@ -28,11 +28,14 @@ const ListSection = ({ label, title, items }) => (
     </section>
 );
 
-const ServingTable = ({ serving, jointService }) => (
+const ServingTable = ({ serving, jointService, servingDate }) => (
     <section className="weeklyReportSection servingSection">
         <div className="weeklySectionTitle">
             <span>Serving</span>
-            <h2>下週服事同工</h2>
+            <h2>
+                下週服事同工
+                <small className="weeklyAttendanceDate">（{servingDate}）</small>
+            </h2>
         </div>
         {jointService ? (
             <div className="jointServiceNotice">下週青崇併大堂</div>
@@ -152,6 +155,7 @@ const WeeklyReportViewPage = () => {
                     <ServingTable
                         serving={selectedReport.next_week_serving}
                         jointService={!!selectedReport.next_week_joint_service}
+                        servingDate={formatNextWeekServingDate(selectedReport)}
                     />
                 </section>
             </article>

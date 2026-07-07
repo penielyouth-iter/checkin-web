@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { buildChildNameSet, createBlankReport, findReportAttendance, mergeReportWithDefault } from './weeklyReportUtils';
+import {
+    buildChildNameSet,
+    createBlankReport,
+    findReportAttendance,
+    formatNextWeekServingDate,
+    mergeReportWithDefault,
+} from './weeklyReportUtils';
 
 describe('weeklyReportUtils', () => {
     it('keeps four default tithe rows for blank and legacy reports', () => {
@@ -10,6 +16,11 @@ describe('weeklyReportUtils', () => {
                 tithe: [{ code: 'A', amount: 100 }],
             },
         }).offering.tithe).toHaveLength(4);
+    });
+
+    it('formats next week serving date as seven days after the report date', () => {
+        expect(formatNextWeekServingDate(createBlankReport(new Date('2026-05-30T00:00:00'))))
+            .toBe('2026-06-06');
     });
 
     it('finds the latest attendance record before the report date', () => {
