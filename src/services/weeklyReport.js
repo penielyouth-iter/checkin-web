@@ -1,7 +1,8 @@
 import { child, get, remove, update } from 'firebase/database';
-import { recordDbRef, weeklyReportsDbRef } from './firebase';
+import { recordDbRef, structureDbRef, weeklyReportsDbRef } from './firebase';
 import { JSONS } from '../constants/AssetPaths';
 import {
+    buildChildNameSet,
     createBlankReport,
     findReportAttendance,
     hasWeeklyReportContent,
@@ -11,22 +12,26 @@ import {
 } from '../utils/weeklyReportUtils';
 
 export const fetchWeeklyReports = async () => {
-    const [reportSnapshot, recordSnapshot] = await Promise.all([
+    const [reportSnapshot, recordSnapshot, structureSnapshot] = await Promise.all([
         get(weeklyReportsDbRef),
         get(recordDbRef),
+        get(structureDbRef),
     ]);
     if (!reportSnapshot.exists()) return [];
     const value = reportSnapshot.val();
     const records = recordSnapshot.exists() && Array.isArray(recordSnapshot.val())
         ? recordSnapshot.val()
         : JSONS.RECORD_DEFAULT;
+    const childNameSet = buildChildNameSet(
+        structureSnapshot.exists() ? structureSnapshot.val() : JSONS.STRUCTURE_DEFAULT
+    );
     return Object.values(value || {})
         .filter(hasWeeklyReportContent)
         .map(report => {
             const merged = mergeReportWithDefault(report);
             return {
                 ...merged,
-                attendance: findReportAttendance(records, merged),
+                attendance: findReportAttendance(records, merged, childNameSet),
             };
         })
         .sort(reportSortDesc);
@@ -51,9 +56,15 @@ export const deleteWeeklyReport = async id => {
 };
 
 export const fetchReportAttendance = async report => {
-    const snapshot = await get(recordDbRef);
-    const records = snapshot.exists() && Array.isArray(snapshot.val())
-        ? snapshot.val()
+    const [recordSnapshot, structureSnapshot] = await Promise.all([
+        get(recordDbRef),
+        get(structureDbRef),
+    ]);
+    const records = recordSnapshot.exists() && Array.isArray(recordSnapshot.val())
+        ? recordSnapshot.val()
         : JSONS.RECORD_DEFAULT;
-    return findReportAttendance(records, report);
+    const childNameSet = buildChildNameSet(
+        structureSnapshot.exists() ? structureSnapshot.val() : JSONS.STRUCTURE_DEFAULT
+    );
+    return findReportAttendance(records, report, childNameSet);
 };

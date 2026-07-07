@@ -74,6 +74,7 @@ export const createBlankReport = (date = getNextSaturday()) => {
             total: 0,
             adult: 0,
             child: 0,
+            date: '',
         },
         offering: {
             total: 0,
@@ -108,6 +109,7 @@ export const mergeReportWithDefault = report => {
             total: report?.attendance?.total ?? report?.attendance?.previous_week ?? blank.attendance.total,
             adult: report?.attendance?.adult ?? blank.attendance.adult,
             child: report?.attendance?.child ?? blank.attendance.child,
+            date: report?.attendance?.date ?? blank.attendance.date,
         },
         offering: {
             ...blank.offering,
@@ -152,8 +154,45 @@ const numberFromValue = value => {
     return match ? Number(match[0]) : 0;
 };
 
-export const getAttendanceStatsFromRecord = record => {
-    if (!record) return { total: 0, adult: 0, child: 0 };
+const splitNames = value => {
+    if (!value) return [];
+    const names = Array.isArray(value) ? value : String(value).split('、');
+    return names.map(name => String(name).trim()).filter(Boolean);
+};
+
+export const buildChildNameSet = structure => {
+    const names = new Set();
+    for (const section of structure?.sections || []) {
+        for (const subgroup of section.subgroups || []) {
+            if (subgroup.id !== 'sg_children' && subgroup.title !== '兒童') continue;
+            for (const member of subgroup.members || []) names.add(member.name);
+        }
+    }
+    return names;
+};
+
+export const getAttendanceStatsFromRecord = (record, childNameSet = new Set()) => {
+    if (!record) return { total: 0, adult: 0, child: 0, date: '' };
+
+    const adultNamesFromField = splitNames(getFieldValue(record, '出席名單'));
+    const childNamesFromField = splitNames(getFieldValue(record, '兒童名單'));
+    if (adultNamesFromField.length > 0 || childNamesFromField.length > 0) {
+        const inferredChildNames = adultNamesFromField.filter(name => childNameSet.has(name));
+        const adultNames = adultNamesFromField.filter(name => !childNameSet.has(name));
+        const childNames = childNamesFromField.length > 0 ? childNamesFromField : inferredChildNames;
+        const adult = adultNames.length;
+        const child = childNames.length;
+        return { total: adult + child, adult, child, date: record.date || '' };
+    }
+
+    const fieldAdultValue = getFieldValue(record, '出席人數');
+    const fieldChildValue = getFieldValue(record, '兒童人數');
+    if (fieldAdultValue !== undefined || fieldChildValue !== undefined) {
+        const adult = numberFromValue(fieldAdultValue);
+        const child = numberFromValue(fieldChildValue);
+        return { total: adult + child, adult, child, date: record.date || '' };
+    }
+
     if (record.fullData?.families) {
         return record.fullData.families.reduce((stats, family) => {
             const isChildrenFamily = family.id === 'sg_children' || family.title === '兒童';
@@ -162,17 +201,18 @@ export const getAttendanceStatsFromRecord = record => {
             else stats.adult += count;
             stats.total += count;
             return stats;
-        }, { total: 0, adult: 0, child: 0 });
+        }, { total: 0, adult: 0, child: 0, date: record.date || '' });
     }
-    const adult = numberFromValue(getFieldValue(record, '出席人數'));
-    const child = numberFromValue(getFieldValue(record, '兒童人數'));
-    return { total: adult + child, adult, child };
+
+    return { total: 0, adult: 0, child: 0, date: record.date || '' };
 };
 
-export const findReportAttendance = (records, report) => {
+export const findReportAttendance = (records, report, childNameSet = new Set()) => {
     const reportDate = getReportGregorianDateId(report);
-    const record = (records || []).find(item => item.date === reportDate);
-    return getAttendanceStatsFromRecord(record);
+    const record = (records || [])
+        .filter(item => item.date && item.date < reportDate)
+        .sort((a, b) => String(b.date).localeCompare(String(a.date)))[0];
+    return getAttendanceStatsFromRecord(record, childNameSet);
 };
 
 const hasTextItems = items =>

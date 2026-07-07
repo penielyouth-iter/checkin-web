@@ -113,7 +113,12 @@ const WeeklyReportViewPage = () => {
                     <div className="weeklyInfoCard attendanceCard">
                         <div className="weeklySectionTitle">
                             <span>Attendance</span>
-                            <h2>上週青崇資訊</h2>
+                            <h2>
+                                上週青崇資訊
+                                {selectedReport.attendance?.date && (
+                                    <small className="weeklyAttendanceDate">（{selectedReport.attendance.date}）</small>
+                                )}
+                            </h2>
                         </div>
                         <div className="attendanceCountLine">
                             <h2>{selectedReport.attendance?.total || selectedReport.attendance?.previous_week || 0} 人</h2>

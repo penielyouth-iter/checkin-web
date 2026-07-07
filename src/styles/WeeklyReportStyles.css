@@ -526,6 +526,13 @@
     color: #26332d;
 }
 
+.weeklyAttendanceDate {
+    margin-left: 2px;
+    color: #69756d;
+    font-size: 13px;
+    font-weight: 700;
+}
+
 .attendanceCountLine {
     display: flex;
     align-items: baseline;
