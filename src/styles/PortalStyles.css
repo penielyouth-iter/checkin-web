@@ -1,8 +1,8 @@
 .portalPage {
     min-height: 100vh;
     background:
-        radial-gradient(circle at 82% 12%, rgba(243, 190, 118, 0.32), transparent 32%),
-        radial-gradient(circle at 12% 78%, rgba(119, 173, 142, 0.28), transparent 28%),
+        linear-gradient(180deg, rgba(255, 244, 224, 0.82) 0%, rgba(255, 250, 240, 0.96) 34%, rgba(242, 248, 241, 0.9) 100%),
+        repeating-linear-gradient(135deg, rgba(111, 129, 117, 0.08) 0 1px, transparent 1px 18px),
         #fffaf0;
     color: #25312c;
     padding: 26px;
@@ -28,10 +28,15 @@
 }
 
 .portalKicker {
-    margin: 0 0 8px;
-    color: #d0694f;
+    display: inline-flex;
+    margin: 0 0 10px;
+    border-radius: 999px;
+    background: #fff;
+    color: #b85d48;
     font-weight: 800;
     letter-spacing: 0;
+    padding: 7px 12px;
+    box-shadow: 0 8px 22px rgba(70, 82, 72, 0.08);
 }
 
 .portalHero h1 {
@@ -53,23 +58,34 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 16px;
+    align-content: start;
 }
 
 .portalCard {
+    --accent: #2f6f55;
+    --accent-soft: rgba(47, 111, 85, 0.12);
+    position: relative;
+    overflow: hidden;
     min-height: 128px;
     border-radius: 8px;
-    padding: 22px;
+    padding: 20px 22px 20px 26px;
+    box-sizing: border-box;
     text-decoration: none;
     color: inherit;
-    border: 1px solid rgba(64, 80, 71, 0.12);
-    box-shadow: 0 18px 45px rgba(46, 56, 50, 0.08);
+    border: 1px solid rgba(64, 80, 71, 0.14);
+    background:
+        linear-gradient(105deg, #ffffff 0%, #ffffff 58%, var(--accent-soft) 100%),
+        repeating-linear-gradient(135deg, rgba(255, 255, 255, 0) 0 12px, rgba(255, 255, 255, 0.58) 12px 13px);
+    box-shadow: 0 14px 34px rgba(46, 56, 50, 0.08);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
 button.portalCard {
+    appearance: none;
+    border: 1px solid rgba(64, 80, 71, 0.14);
     width: 100%;
     font: inherit;
     text-align: left;
@@ -77,16 +93,36 @@ button.portalCard {
 }
 
 .portalCard:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 22px 54px rgba(46, 56, 50, 0.14);
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--accent) 46%, transparent);
+    box-shadow: 0 22px 48px rgba(46, 56, 50, 0.16);
+}
+
+.portalCard::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 7px;
+    background: var(--accent);
+}
+
+.portalCard::after {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    color: var(--accent);
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 900;
+    opacity: 0.18;
 }
 
 .portalCardTag {
     align-self: flex-start;
     border-radius: 999px;
     padding: 6px 10px;
-    background: rgba(255, 255, 255, 0.72);
-    color: #536157;
+    background: var(--accent-soft);
+    color: var(--accent);
     font-size: 12px;
     font-weight: 800;
 }
@@ -95,6 +131,7 @@ button.portalCard {
     margin: 20px 0 0;
     font-size: 28px;
     letter-spacing: 0;
+    padding-right: 38px;
 }
 
 .portalCard p {
@@ -109,27 +146,57 @@ button.portalCard {
 }
 
 .checkinCard {
-    background: linear-gradient(150deg, #ffffff 0%, #e7f4eb 100%);
+    --accent: #2f7d59;
+    --accent-soft: rgba(47, 125, 89, 0.13);
+}
+
+.checkinCard::after {
+    content: "01";
 }
 
 .recordCard {
-    background: linear-gradient(150deg, #ffffff 0%, #ddecf5 100%);
+    --accent: #32789a;
+    --accent-soft: rgba(50, 120, 154, 0.13);
+}
+
+.recordCard::after {
+    content: "02";
 }
 
 .weeklyEditCard {
-    background: linear-gradient(150deg, #ffffff 0%, #ffe9c4 100%);
+    --accent: #b96f28;
+    --accent-soft: rgba(185, 111, 40, 0.14);
+}
+
+.weeklyEditCard::after {
+    content: "03";
 }
 
 .weeklyViewCard {
-    background: linear-gradient(150deg, #ffffff 0%, #f5d5c8 100%);
+    --accent: #bd6249;
+    --accent-soft: rgba(189, 98, 73, 0.14);
+}
+
+.weeklyViewCard::after {
+    content: "04";
 }
 
 .servingCurrentCard {
-    background: linear-gradient(150deg, #ffffff 0%, #e6e4ff 100%);
+    --accent: #695fa8;
+    --accent-soft: rgba(105, 95, 168, 0.13);
+}
+
+.servingCurrentCard::after {
+    content: "05";
 }
 
 .servingNextCard {
-    background: linear-gradient(150deg, #ffffff 0%, #e9efe8 100%);
+    --accent: #75804c;
+    --accent-soft: rgba(117, 128, 76, 0.16);
+}
+
+.servingNextCard::after {
+    content: "06";
 }
 
 @media (max-width: 860px) {
@@ -169,9 +236,21 @@ button.portalCard {
         padding: 18px;
     }
 
+    .portalCard::after {
+        top: 16px;
+        right: 14px;
+        font-size: 26px;
+    }
+
+    .portalCardTag {
+        font-size: 11px;
+        padding: 5px 8px;
+    }
+
     .portalCard h2 {
         font-size: 22px;
         margin-top: 18px;
+        padding-right: 28px;
     }
 
     .portalCard p {
