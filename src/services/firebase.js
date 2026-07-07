@@ -12,5 +12,6 @@ const familyDbRef = ref(database, dbEndpoints.FAMILIES)
 const recordDbRef = ref(database, dbEndpoints.RECORDS)
 const structureDbRef = ref(database, dbEndpoints.STRUCTURE)
 const weeklyReportsDbRef = ref(database, dbEndpoints.WEEKLY_REPORTS)
+const portalLinksDbRef = ref(database, dbEndpoints.PORTAL_LINKS)
 
-export { database, familyDbRef, recordDbRef, structureDbRef, weeklyReportsDbRef };
+export { database, familyDbRef, recordDbRef, structureDbRef, weeklyReportsDbRef, portalLinksDbRef };

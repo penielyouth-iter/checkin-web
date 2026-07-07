@@ -13,4 +13,5 @@ export const dbEndpoints = {
     RECORDS: "peniel/weeklyrecords",
     STRUCTURE: "peniel/structure_v2",
     WEEKLY_REPORTS: "peniel/weekly_reports",
+    PORTAL_LINKS: "peniel/portal_links",
 };

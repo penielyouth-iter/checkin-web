@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Banner from '../components/Banner.jsx';
 import { verifyAdminPassword } from '../constants/AdminAuth';
+import { DEFAULT_PORTAL_LINKS, fetchPortalLinks, savePortalLinks } from '../services/portalLinks';
 import '../styles/PortalStyles.css';
-
-const CURRENT_SEASON_SERVING_URL = 'https://docs.google.com/spreadsheets/d/1E4zF8ikU2aM89FbUAKop_lPCM6Rrn8EHXC4iSgz4B8I/edit?gid=0#gid=0';
 
 const HomePage = ({ isAdmin, onAdminChange }) => {
     const [passwordInput, setPasswordInput] = React.useState('');
+    const [portalLinks, setPortalLinks] = React.useState(DEFAULT_PORTAL_LINKS);
 
     const handleAdminSubmit = e => {
         e.preventDefault();
@@ -17,6 +17,39 @@ const HomePage = ({ isAdmin, onAdminChange }) => {
         } else {
             alert('密碼錯誤');
             setPasswordInput('');
+        }
+    };
+
+    React.useEffect(() => {
+        const loadPortalLinks = async () => {
+            try {
+                setPortalLinks(await fetchPortalLinks());
+            } catch (error) {
+                console.error(error);
+                setPortalLinks(DEFAULT_PORTAL_LINKS);
+            }
+        };
+        loadPortalLinks();
+    }, []);
+
+    const updateServingLink = async (key, label, allowEmpty = false) => {
+        const value = window.prompt(`${label}連結網址：`, portalLinks[key] || '');
+        if (value === null) return;
+        const nextUrl = value.trim();
+        if (!allowEmpty && !nextUrl) {
+            alert(`${label}連結不可空白`);
+            return;
+        }
+
+        const nextLinks = { ...portalLinks, [key]: nextUrl };
+        setPortalLinks(nextLinks);
+        try {
+            await savePortalLinks(nextLinks);
+            alert(`${label}連結已更新`);
+        } catch (error) {
+            console.error(error);
+            alert('儲存失敗，請檢查網路連線。');
+            setPortalLinks(portalLinks);
         }
     };
 
@@ -58,24 +91,54 @@ const HomePage = ({ isAdmin, onAdminChange }) => {
                 </div>
 
                 <div className="portalServicePair">
-                    <a
-                        className="portalCard servingCurrentCard"
-                        href={CURRENT_SEASON_SERVING_URL}
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <span className="portalCardTag">Serving</span>
-                        <h2>本季服事表</h2>
-                    </a>
+                    <div className="portalServingCardShell">
+                        <a
+                            className="portalCard servingCurrentCard"
+                            href={portalLinks.currentSeasonServing || DEFAULT_PORTAL_LINKS.currentSeasonServing}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <span className="portalCardTag">Serving</span>
+                            <h2>本季服事表</h2>
+                        </a>
+                        {isAdmin && (
+                            <button
+                                type="button"
+                                className="portalCardEditBtn"
+                                aria-label="編輯本季服事表連結"
+                                onClick={() => updateServingLink('currentSeasonServing', '本季服事表')}
+                            >
+                                ⚙
+                            </button>
+                        )}
+                    </div>
 
-                    <button
-                        type="button"
-                        className="portalCard servingNextCard"
-                        onClick={() => alert('服事表尚未公佈，請耐心等待 🙏')}
-                    >
-                        <span className="portalCardTag">Next Season</span>
-                        <h2>下一季服事表</h2>
-                    </button>
+                    <div className="portalServingCardShell">
+                        <button
+                            type="button"
+                            className={`portalCard servingNextCard ${!portalLinks.nextSeasonServing ? 'servingNextCardEmpty' : ''}`}
+                            disabled={!portalLinks.nextSeasonServing}
+                            onClick={() => {
+                                window.open(portalLinks.nextSeasonServing, '_blank', 'noopener,noreferrer');
+                            }}
+                        >
+                            <span className="portalCardTag">Next Season</span>
+                            <h2>下一季服事表</h2>
+                            {!portalLinks.nextSeasonServing && (
+                                <p className="portalCardNotice">（尚未公告）</p>
+                            )}
+                        </button>
+                        {isAdmin && (
+                            <button
+                                type="button"
+                                className="portalCardEditBtn"
+                                aria-label="編輯下一季服事表連結"
+                                onClick={() => updateServingLink('nextSeasonServing', '下一季服事表', true)}
+                            >
+                                ⚙
+                            </button>
+                        )}
+                    </div>
                 </div>
             </section>
 
