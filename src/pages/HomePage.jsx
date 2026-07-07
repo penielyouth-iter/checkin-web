@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Banner from '../components/Banner.jsx';
 import '../styles/PortalStyles.css';
 
+const CURRENT_SEASON_SERVING_URL = 'https://docs.google.com/spreadsheets/d/1E4zF8ikU2aM89FbUAKop_lPCM6Rrn8EHXC4iSgz4B8I/edit?gid=0#gid=0';
+
 const HomePage = () => (
     <main className="portalPage">
         <div className="portalBanner">
@@ -16,33 +18,50 @@ const HomePage = () => (
         </section>
 
         <section className="portalGrid" aria-label="系統服務">
-            <Link className="portalCard checkinCard" to="/checkin">
-                <span className="portalCardTag">Check-in</span>
-                <h2>有意思點點名</h2>
-                <p>登記出席、用餐與分組，快速完成每週青崇簽到。</p>
-                <strong>開始點名</strong>
-            </Link>
+            <div className="portalServicePair">
+                <Link className="portalCard checkinCard" to="/checkin">
+                    <span className="portalCardTag">Check-in</span>
+                    <h2>有意思點點名</h2>
+                </Link>
 
-            <Link className="portalCard recordCard" to="/record">
-                <span className="portalCardTag">Records</span>
-                <h2>點點名紀錄</h2>
-                <p>查看每週出席趨勢、人數統計與詳細出席名單。</p>
-                <strong>查看紀錄</strong>
-            </Link>
+                <Link className="portalCard recordCard" to="/record">
+                    <span className="portalCardTag">Records</span>
+                    <h2>點點名紀錄</h2>
+                </Link>
+            </div>
 
-            <Link className="portalCard weeklyEditCard" to="/weekly/edit">
-                <span className="portalCardTag">Weekly Report</span>
-                <h2>填寫週報資訊</h2>
-                <p>不同負責人可分別填寫報告、代禱、奉獻與服事提醒。</p>
-                <strong>開始填寫</strong>
-            </Link>
+            <div className="portalServicePair">
+                <Link className="portalCard weeklyEditCard" to="/weekly/edit">
+                    <span className="portalCardTag">Weekly Report</span>
+                    <h2>填寫週報資訊</h2>
+                </Link>
 
-            <Link className="portalCard weeklyViewCard" to="/weekly/view">
-                <span className="portalCardTag">Archive</span>
-                <h2>瀏覽週報資訊</h2>
-                <p>查看最新週報，也可切換歷史週報紀錄。</p>
-                <strong>查看週報</strong>
-            </Link>
+                <Link className="portalCard weeklyViewCard" to="/weekly/view">
+                    <span className="portalCardTag">Archive</span>
+                    <h2>瀏覽週報資訊</h2>
+                </Link>
+            </div>
+
+            <div className="portalServicePair">
+                <a
+                    className="portalCard servingCurrentCard"
+                    href={CURRENT_SEASON_SERVING_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    <span className="portalCardTag">Serving</span>
+                    <h2>本季服事表</h2>
+                </a>
+
+                <button
+                    type="button"
+                    className="portalCard servingNextCard"
+                    onClick={() => alert('服事表尚未公佈，請耐心等待 🙏')}
+                >
+                    <span className="portalCardTag">Next Season</span>
+                    <h2>下一季服事表</h2>
+                </button>
+            </div>
         </section>
     </main>
 );
