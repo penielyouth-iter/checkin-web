@@ -212,6 +212,10 @@ const WeeklyReportEditPage = ({ isAdmin }) => {
         load();
     }, [reportDate]);
 
+    useEffect(() => {
+        if (!isAdmin) setTitleInfoEditing(false);
+    }, [isAdmin]);
+
     const saveReportPatch = async (label, patch) => {
         const nextReport = mergeReportWithDefault({
             ...report,
@@ -324,22 +328,24 @@ const WeeklyReportEditPage = ({ isAdmin }) => {
                     <div>
                         <h2>標題與年度主題</h2>
                     </div>
-                    {titleInfoEditing ? (
-                        <button
-                            className="weeklySaveBtn"
-                            onClick={saveTitleInfo}
-                            disabled={saving !== ''}
-                        >
-                            {saving === '標題與年度主題' ? '儲存中...' : '儲存'}
-                        </button>
-                    ) : (
-                        <button
-                            className="weeklySaveBtn"
-                            onClick={() => setTitleInfoEditing(true)}
-                            disabled={saving !== ''}
-                        >
-                            編輯
-                        </button>
+                    {isAdmin && (
+                        titleInfoEditing ? (
+                            <button
+                                className="weeklySaveBtn"
+                                onClick={saveTitleInfo}
+                                disabled={saving !== ''}
+                            >
+                                {saving === '標題與年度主題' ? '儲存中...' : '儲存'}
+                            </button>
+                        ) : (
+                            <button
+                                className="weeklySaveBtn"
+                                onClick={() => setTitleInfoEditing(true)}
+                                disabled={saving !== ''}
+                            >
+                                編輯
+                            </button>
+                        )
                     )}
                 </div>
                 {titleInfoEditing ? (

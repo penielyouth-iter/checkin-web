@@ -151,7 +151,7 @@ button.portalCard {
 }
 
 .checkinCard::after {
-    content: "01";
+    content: "04";
 }
 
 .recordCard {
@@ -160,7 +160,7 @@ button.portalCard {
 }
 
 .recordCard::after {
-    content: "02";
+    content: "03";
 }
 
 .weeklyEditCard {
@@ -169,7 +169,7 @@ button.portalCard {
 }
 
 .weeklyEditCard::after {
-    content: "03";
+    content: "02";
 }
 
 .weeklyViewCard {
@@ -178,7 +178,7 @@ button.portalCard {
 }
 
 .weeklyViewCard::after {
-    content: "04";
+    content: "01";
 }
 
 .servingCurrentCard {
@@ -286,9 +286,9 @@ button.portalCard {
     }
 
     .portalCard::after {
-        top: 16px;
-        right: 14px;
-        font-size: 26px;
+        top: 14px;
+        right: 10px;
+        font-size: 20px;
     }
 
     .portalCardTag {
@@ -297,9 +297,9 @@ button.portalCard {
     }
 
     .portalCard h2 {
-        font-size: 22px;
+        font-size: 21px;
         margin-top: 18px;
-        padding-right: 28px;
+        padding-right: 2px;
     }
 
     .portalCard p {

@@ -13,6 +13,46 @@ const titheSlots = tithe => [
     { code: '', amount: 0 },
 ].slice(0, Math.max(4, Array.isArray(tithe) ? tithe.length : 0));
 
+const URL_PATTERN = /(https?:\/\/[^\s<>"']+)/g;
+
+const trimTrailingPunctuation = value => {
+    const match = String(value).match(/^(.*?)([，。！？、,.!?)]*)$/);
+    return {
+        url: match?.[1] || value,
+        trailing: match?.[2] || '',
+    };
+};
+
+const formatUrlLabel = value => {
+    try {
+        const url = new URL(value);
+        const host = url.hostname.replace(/^www\./, '');
+        const path = url.pathname.replace(/\/$/, '');
+        if (!path || path === '/') return host;
+        const shortPath = path.length > 24 ? `${path.slice(0, 24)}...` : path;
+        return `${host}${shortPath}`;
+    } catch {
+        return '開啟連結';
+    }
+};
+
+const LinkifiedText = ({ text }) => (
+    <>
+        {String(text || '').split(URL_PATTERN).map((part, idx) => {
+            if (!part.match(URL_PATTERN)) return <React.Fragment key={idx}>{part}</React.Fragment>;
+            const { url, trailing } = trimTrailingPunctuation(part);
+            return (
+                <React.Fragment key={idx}>
+                    <a className="weeklyReportLink" href={url} target="_blank" rel="noreferrer">
+                        {formatUrlLabel(url)}
+                    </a>
+                    {trailing}
+                </React.Fragment>
+            );
+        })}
+    </>
+);
+
 const ListSection = ({ label, title, items }) => (
     <section className="weeklyReportSection">
         <div className="weeklySectionTitle">
@@ -21,7 +61,7 @@ const ListSection = ({ label, title, items }) => (
         </div>
         <ol className="weeklyNumberList">
             {(items || []).filter(Boolean).map((item, idx) => (
-                <li key={idx}>{item}</li>
+                <li key={idx}><LinkifiedText text={item} /></li>
             ))}
         </ol>
         {(items || []).filter(Boolean).length === 0 && <p className="weeklyMuted">尚未填寫</p>}

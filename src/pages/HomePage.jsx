@@ -34,26 +34,26 @@ const HomePage = ({ isAdmin, onAdminChange }) => {
 
             <section className="portalGrid" aria-label="系統服務">
                 <div className="portalServicePair">
-                    <Link className="portalCard checkinCard" to="/checkin">
-                        <span className="portalCardTag">Check-in</span>
-                        <h2>有意思點點名</h2>
+                    <Link className="portalCard weeklyViewCard" to="/weekly/view">
+                        <span className="portalCardTag">Archive</span>
+                        <h2>瀏覽週報資訊</h2>
                     </Link>
 
-                    <Link className="portalCard recordCard" to="/record">
-                        <span className="portalCardTag">Records</span>
-                        <h2>點點名紀錄</h2>
-                    </Link>
-                </div>
-
-                <div className="portalServicePair">
                     <Link className="portalCard weeklyEditCard" to="/weekly/edit">
                         <span className="portalCardTag">Weekly Report</span>
                         <h2>填寫週報資訊</h2>
                     </Link>
+                </div>
 
-                    <Link className="portalCard weeklyViewCard" to="/weekly/view">
-                        <span className="portalCardTag">Archive</span>
-                        <h2>瀏覽週報資訊</h2>
+                <div className="portalServicePair">
+                    <Link className="portalCard recordCard" to="/record">
+                        <span className="portalCardTag">Records</span>
+                        <h2>點點名紀錄</h2>
+                    </Link>
+
+                    <Link className="portalCard checkinCard" to="/checkin">
+                        <span className="portalCardTag">Check-in</span>
+                        <h2>有意思點點名</h2>
                     </Link>
                 </div>
 

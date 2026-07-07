@@ -519,6 +519,20 @@
     word-break: break-word;
 }
 
+.weeklyReportLink {
+    color: #2f6f55;
+    font-weight: 800;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.weeklyReportLink:hover {
+    color: #bd6249;
+}
+
 .weeklyMuted {
     color: #8c958f;
     overflow-wrap: anywhere;
